@@ -27,4 +27,9 @@ public class UserService {
         System.out.println("query...");
     }
 
+    @LimitFrequency(interval = 2)
+    public void query(final long id) {
+        System.out.println("query with id...");
+    }
+
 }

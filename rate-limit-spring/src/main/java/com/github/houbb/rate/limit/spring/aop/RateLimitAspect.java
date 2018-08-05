@@ -5,6 +5,10 @@
 
 package com.github.houbb.rate.limit.spring.aop;
 
+import com.github.houbb.log.integration.core.Log;
+import com.github.houbb.log.integration.core.LogFactory;
+import com.github.houbb.paradise.common.constant.CommonConstant;
+import com.github.houbb.paradise.common.util.ArrayUtil;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
@@ -26,6 +30,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,6 +49,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @API(status = API.Status.MAINTAINED)
 public class RateLimitAspect {
 
+    private Log log = LogFactory.getLog(RateLimitAspect.class);
+
     /**
      * 用来存放方法的限制器
      * Key=方法全名+注解名称
@@ -52,7 +59,8 @@ public class RateLimitAspect {
 
     @Pointcut("@annotation(com.github.houbb.rate.limit.spring.annotation.LimitCount) || " +
                       "@annotation(com.github.houbb.rate.limit.spring.annotation.LimitFrequency)")
-    public void myPointcut(){}
+    public void myPointcut() {
+    }
 
     @Around("myPointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -65,12 +73,13 @@ public class RateLimitAspect {
 
     private void handleLimitCount(final Method method) {
         LimitCount limitCount = method.getDeclaredAnnotation(LimitCount.class);
-        if(ArgUtil.isNotNull(limitCount)) {
-            final String countKey = getMethodFullName(method) + Key.LIMIT_COUNT;
-            if(!limitHashMap.containsKey(countKey)) {
+        if (ArgUtil.isNotNull(limitCount)) {
+            final String countKey = getMethodFullName(method) + CommonConstant.COLON + Key.LIMIT_COUNT;
+            log.info(countKey);
+            if (!limitHashMap.containsKey(countKey)) {
                 LimitModeEnum limitModeEnum = limitCount.limitMode();
                 Limit limitCreate;
-                if(LimitModeEnum.isThreadLocal(limitModeEnum)) {
+                if (LimitModeEnum.isThreadLocal(limitModeEnum)) {
                     limitCreate = new ThreadLocalLimitCount(limitCount.timeUnit(), limitCount.interval(), limitCount.count());
                 } else {
                     limitCreate = new GlobalLimitCount(limitCount.timeUnit(), limitCount.interval(), limitCount.count());
@@ -87,27 +96,28 @@ public class RateLimitAspect {
     private void handleLimitFrequency(final Method method) {
         LimitFrequency limitFrequency = method.getDeclaredAnnotation(LimitFrequency.class);
 
-        if(ArgUtil.isNotNull(limitFrequency)) {
-            final String countKey = getMethodFullName(method) + Key.LIMIT_FREQUENCY;
-            if(!limitHashMap.containsKey(countKey)) {
+        if (ArgUtil.isNotNull(limitFrequency)) {
+            final String frequencyKey = getMethodFullName(method) + CommonConstant.COLON + Key.LIMIT_FREQUENCY;
+            log.info(frequencyKey);
+            if (!limitHashMap.containsKey(frequencyKey)) {
                 LimitModeEnum limitModeEnum = limitFrequency.limitMode();
                 Limit limitCreate;
-                if(LimitModeEnum.isThreadLocal(limitModeEnum)) {
+                if (LimitModeEnum.isThreadLocal(limitModeEnum)) {
                     limitCreate = new ThreadLocalLimitFrequency(limitFrequency.timeUnit(), limitFrequency.interval());
                 } else {
                     limitCreate = new GlobalLimitFrequency(limitFrequency.timeUnit(), limitFrequency.interval());
                 }
 
-                limitHashMap.put(countKey, limitCreate);
+                limitHashMap.put(frequencyKey, limitCreate);
             }
 
-            Limit limit = limitHashMap.get(countKey);
+            Limit limit = limitHashMap.get(frequencyKey);
             limit.limit();
         }
     }
 
     private interface Key {
-        String LIMIT_COUNT = "limitCount";
+        String LIMIT_COUNT     = "limitCount";
         String LIMIT_FREQUENCY = "limitCount";
     }
 
@@ -124,13 +134,20 @@ public class RateLimitAspect {
 
     /**
      * 方法全名此处应该考虑不同的参数问题。
-     * TODO: 抽象此工具类
+     *
      * @param method 方法
      * @return 完整的方法名称
      */
-    private String getMethodFullName(Method method) {
+    private static String getMethodFullName(Method method) {
         final String className = method.getDeclaringClass().getName();
-        return className + "." + method.getName();
+        Parameter[] parameters = method.getParameters();
+        StringBuilder nameBuilder = new StringBuilder(className + "." + method.getName());
+        if (ArrayUtil.isNotEmpty(parameters)) {
+            for (Parameter parameter : parameters) {
+                nameBuilder.append(CommonConstant.COLON).append(parameter.getType().getName());
+            }
+        }
+        return nameBuilder.toString();
     }
 
 }
