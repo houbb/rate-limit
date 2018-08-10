@@ -25,9 +25,14 @@ public class GlobalLimitCount extends AbstractLimitCount {
 
     private static Log log = LogFactory.getLog(GlobalLimitCount.class);
 
-
-    public GlobalLimitCount(TimeUnit timeUnit, long time, int count) {
-        super(timeUnit, time, count);
+    /**
+     * 构造器
+     * @param timeUnit 时间单位
+     * @param interval 时间间隔
+     * @param count 访问次数
+     */
+    public GlobalLimitCount(TimeUnit timeUnit, long interval, int count) {
+        super(timeUnit, interval, count);
     }
 
     @Override

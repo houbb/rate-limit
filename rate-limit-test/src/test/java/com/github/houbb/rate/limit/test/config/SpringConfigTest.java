@@ -32,10 +32,18 @@ public class SpringConfigTest {
     private UserService userService;
 
     @Test
-    public void queryTest() {
+    public void limitFrequencyThreadLocalTest() {
         for(int i = 0; i < 5; i++) {
-            userService.query();
+            userService.limitFrequencyThreadLocal();
         }
     }
+
+    @Test
+    public void limitCountThreadLocalTest() {
+        for(int i = 0; i < 10; i++) {
+            userService.limitCountThreadLocal();
+        }
+    }
+
 
 }

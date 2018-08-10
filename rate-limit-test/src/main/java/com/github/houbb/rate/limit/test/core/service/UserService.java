@@ -5,7 +5,11 @@
 
 package com.github.houbb.rate.limit.test.core.service;
 
+import com.github.houbb.log.integration.core.Log;
+import com.github.houbb.log.integration.core.LogFactory;
+import com.github.houbb.rate.limit.spring.annotation.LimitCount;
 import com.github.houbb.rate.limit.spring.annotation.LimitFrequency;
+import com.github.houbb.rate.limit.spring.constant.LimitModeEnum;
 
 import org.springframework.stereotype.Service;
 
@@ -22,14 +26,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @LimitFrequency(interval = 2)
-    public void query() {
-        System.out.println("query...");
-    }
+    private static final Log log = LogFactory.getLog(UserService.class);
 
     @LimitFrequency(interval = 2)
-    public void query(final long id) {
-        System.out.println("query with id...");
+    public void limitFrequencyThreadLocal() {
+        log.info("{}", Thread.currentThread().getName());
+    }
+
+    @LimitFrequency(interval = 2, limitMode = LimitModeEnum.GLOBAL)
+    public void limitFrequencyGlobal(final long id) {
+        log.info("{}", Thread.currentThread().getName());
+    }
+
+    @LimitCount(interval = 2, count = 5)
+    public void limitCountThreadLocal() {
+        log.info("{}", Thread.currentThread().getName());
+    }
+
+    @LimitCount(interval = 2, count = 5, limitMode = LimitModeEnum.GLOBAL)
+    public void limitCountGlobal() {
+        log.info("{}", Thread.currentThread().getName());
     }
 
 }

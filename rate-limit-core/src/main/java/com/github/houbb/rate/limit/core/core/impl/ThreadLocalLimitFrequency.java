@@ -36,7 +36,11 @@ public class ThreadLocalLimitFrequency implements Limit {
      */
     private long interval;
 
-
+    /**
+     * 构造器
+     * @param timeUnit 时间单位
+     * @param interval 时间间隔
+     */
     public ThreadLocalLimitFrequency(TimeUnit timeUnit, long interval) {
         this.timeUnit = timeUnit;
         this.interval = interval;

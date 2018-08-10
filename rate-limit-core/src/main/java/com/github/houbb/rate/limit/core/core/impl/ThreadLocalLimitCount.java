@@ -19,6 +19,12 @@ import java.util.concurrent.TimeUnit;
 @API(status = API.Status.EXPERIMENTAL)
 public class ThreadLocalLimitCount extends AbstractLimitCount {
 
+    /**
+     * 构造器
+     * @param timeUnit 时间单位
+     * @param interval 时间
+     * @param count 访问次数
+     */
     public ThreadLocalLimitCount(TimeUnit timeUnit, long interval, int count) {
         super(timeUnit, interval, count);
     }
