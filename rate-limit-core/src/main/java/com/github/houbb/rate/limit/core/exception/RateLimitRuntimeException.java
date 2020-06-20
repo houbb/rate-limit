@@ -8,7 +8,7 @@ package com.github.houbb.rate.limit.core.exception;
 import org.apiguardian.api.API;
 
 /**
- * <p> </p>
+ * <p> 运行时异常 </p>
  *
  * <pre> Created: 2018/8/5 下午10:28  </pre>
  * <pre> Project: rate-limit  </pre>
