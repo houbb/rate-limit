@@ -9,8 +9,8 @@ import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
+import org.junit.Ignore;
 
-import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * 全局-限制调用次数案例
  * Created by bbhou on 2017/11/2.
  */
+@Ignore
 public class GlobalLimitCountTest {
 
     private static final Log log = LogFactory.getLog(GlobalLimitCountTest.class);

@@ -6,13 +6,12 @@
 package com.github.houbb.rate.limit.core.core.impl;
 
 
+import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.support.CurrentTime;
 import com.github.houbb.rate.limit.core.support.LimitHandler;
 import com.github.houbb.rate.limit.core.support.impl.DefaultLimitHandler;
 import com.github.houbb.rate.limit.core.support.impl.SimpleCurrentTime;
-import com.github.houbb.rate.limit.core.util.ArgUtil;
-
 import org.apiguardian.api.API;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -79,7 +78,7 @@ public abstract class AbstractLimitCount implements Limit {
     //--------------------------------------------------- SUPPORT Getter & Setter
     public CurrentTime getCurrentTime() {
         //设置默认的当前时间获取
-        if(ArgUtil.isNull(this.currentTime)) {
+        if(ObjectUtil.isNull(this.currentTime)) {
             currentTime = new SimpleCurrentTime();
         }
 
@@ -91,7 +90,7 @@ public abstract class AbstractLimitCount implements Limit {
     }
 
     public LimitHandler getLimitHandler() {
-        if(ArgUtil.isNull(limitHandler)) {
+        if(ObjectUtil.isNull(limitHandler)) {
             limitHandler = new DefaultLimitHandler();
         }
         return limitHandler;

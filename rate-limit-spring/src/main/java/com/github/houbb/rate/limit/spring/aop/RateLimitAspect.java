@@ -5,21 +5,19 @@
 
 package com.github.houbb.rate.limit.spring.aop;
 
+import com.github.houbb.heaven.constant.PunctuationConst;
+import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.paradise.common.constant.CommonConstant;
-import com.github.houbb.paradise.common.util.ArrayUtil;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
 import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitCount;
 import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitFrequency;
 import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
-import com.github.houbb.rate.limit.core.util.ArgUtil;
 import com.github.houbb.rate.limit.spring.annotation.LimitCount;
 import com.github.houbb.rate.limit.spring.annotation.LimitFrequency;
 import com.github.houbb.rate.limit.spring.constant.LimitModeEnum;
-
 import org.apiguardian.api.API;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -30,7 +28,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,8 +38,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * <pre> Project: rate-limit  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
 @Aspect
 @Component
@@ -72,9 +69,9 @@ public class RateLimitAspect {
     }
 
     private void handleLimitCount(final Method method) {
-        LimitCount limitCount = method.getDeclaredAnnotation(LimitCount.class);
-        if (ArgUtil.isNotNull(limitCount)) {
-            final String countKey = getMethodFullName(method) + CommonConstant.COLON + Key.LIMIT_COUNT;
+        LimitCount limitCount = method.getAnnotation(LimitCount.class);
+        if (ObjectUtil.isNotNull(limitCount)) {
+            final String countKey = getMethodFullName(method) + PunctuationConst.COLON + Key.LIMIT_COUNT;
             log.info(countKey);
             if (!limitHashMap.containsKey(countKey)) {
                 LimitModeEnum limitModeEnum = limitCount.limitMode();
@@ -94,10 +91,10 @@ public class RateLimitAspect {
     }
 
     private void handleLimitFrequency(final Method method) {
-        LimitFrequency limitFrequency = method.getDeclaredAnnotation(LimitFrequency.class);
+        LimitFrequency limitFrequency = method.getAnnotation(LimitFrequency.class);
 
-        if (ArgUtil.isNotNull(limitFrequency)) {
-            final String frequencyKey = getMethodFullName(method) + CommonConstant.COLON + Key.LIMIT_FREQUENCY;
+        if (ObjectUtil.isNotNull(limitFrequency)) {
+            final String frequencyKey = getMethodFullName(method) + PunctuationConst.COLON + Key.LIMIT_FREQUENCY;
             log.info(frequencyKey);
             if (!limitHashMap.containsKey(frequencyKey)) {
                 LimitModeEnum limitModeEnum = limitFrequency.limitMode();
@@ -118,9 +115,15 @@ public class RateLimitAspect {
 
     private interface Key {
         String LIMIT_COUNT     = "limitCount";
-        String LIMIT_FREQUENCY = "limitCount";
+        String LIMIT_FREQUENCY = "limitFrequency";
     }
 
+    /**
+     * 获取当前扥方法
+     * @param point 切面
+     * @return 结果
+     * @since 0.0.1
+     */
     private Method getCurrentMethod(ProceedingJoinPoint point) {
         try {
             Signature sig = point.getSignature();
@@ -137,14 +140,15 @@ public class RateLimitAspect {
      *
      * @param method 方法
      * @return 完整的方法名称
+     * @since 0.0.1
      */
     private static String getMethodFullName(Method method) {
         final String className = method.getDeclaringClass().getName();
-        Parameter[] parameters = method.getParameters();
+        Class[] types = method.getParameterTypes();
         StringBuilder nameBuilder = new StringBuilder(className + "." + method.getName());
-        if (ArrayUtil.isNotEmpty(parameters)) {
-            for (Parameter parameter : parameters) {
-                nameBuilder.append(CommonConstant.COLON).append(parameter.getType().getName());
+        if (ObjectUtil.isNotEmpty(types)) {
+            for (Class parameter : types) {
+                nameBuilder.append(PunctuationConst.COLON).append(parameter.getName());
             }
         }
         return nameBuilder.toString();

@@ -15,8 +15,8 @@ import org.apiguardian.api.API;
  * 1. 用户自定义时可以覆写这个类的方法。本类所有实现暂时为空。
  * 2. 如果想超时直接使用默认方法 {@link DefaultLimitHandler} 继承这个方法是不错的选择。
  * @author houbinbin
- * @version 1.0
- * @since 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public class AbstractLimitHandler implements LimitHandler {

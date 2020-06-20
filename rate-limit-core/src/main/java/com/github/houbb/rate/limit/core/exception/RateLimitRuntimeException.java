@@ -14,8 +14,8 @@ import org.apiguardian.api.API;
  * <pre> Project: rate-limit  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public class RateLimitRuntimeException extends RuntimeException {

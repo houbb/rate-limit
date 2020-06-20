@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 限制调用频率
  * Created by bbhou on 2017/9/20.
+ * @author binbin.hou
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

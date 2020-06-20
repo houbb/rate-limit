@@ -10,8 +10,8 @@ import org.apiguardian.api.API;
 /**
  * 默认的限制处理
  * @author houbinbin
- * @version 1.0
- * @since 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public class DefaultLimitHandler extends AbstractLimitHandler {

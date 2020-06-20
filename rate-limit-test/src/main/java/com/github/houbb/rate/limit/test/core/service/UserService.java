@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
  * <pre> Project: rate-limit  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
 @Service
 public class UserService {

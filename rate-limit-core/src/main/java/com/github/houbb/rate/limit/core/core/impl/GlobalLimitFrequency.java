@@ -35,7 +35,6 @@ public class GlobalLimitFrequency extends AbstractLimitFrequency {
         super(timeUnit, interval);
     }
 
-
     @Override
     public synchronized void limit() {
         IsFirstTime isFirstTime = getIsFirstTime();

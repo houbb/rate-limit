@@ -10,6 +10,7 @@ import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
 import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitFrequency;
+import org.junit.Ignore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * ThreadLocal-限制访问频率
  * Created by bbhou on 2017/11/2.
  */
+@Ignore
 public class ThreadLocalLimitFrequencyTest {
 
     private static final Log log = LogFactory.getLog(ThreadLocalLimitFrequencyTest.class);

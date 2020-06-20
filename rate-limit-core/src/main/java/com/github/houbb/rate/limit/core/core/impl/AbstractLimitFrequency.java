@@ -6,7 +6,7 @@
 package com.github.houbb.rate.limit.core.core.impl;
 
 
-
+import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.support.IsFirstTime;
 import com.github.houbb.rate.limit.core.support.LimitHandler;
@@ -14,8 +14,6 @@ import com.github.houbb.rate.limit.core.support.TimeDiff;
 import com.github.houbb.rate.limit.core.support.impl.DefaultLimitHandler;
 import com.github.houbb.rate.limit.core.support.impl.SimpleIsFirstTime;
 import com.github.houbb.rate.limit.core.support.impl.SimpleTimeDiff;
-import com.github.houbb.rate.limit.core.util.ArgUtil;
-
 import org.apiguardian.api.API;
 
 import java.util.concurrent.TimeUnit;
@@ -76,7 +74,7 @@ public abstract class AbstractLimitFrequency implements Limit {
     //--------------------------------------------- support
 
     public IsFirstTime getIsFirstTime() {
-        if(ArgUtil.isNull(isFirstTime)) {
+        if(ObjectUtil.isNull(isFirstTime)) {
             isFirstTime = new SimpleIsFirstTime();
         }
         return isFirstTime;
@@ -87,7 +85,7 @@ public abstract class AbstractLimitFrequency implements Limit {
     }
 
     public TimeDiff getTimeDiff() {
-        if(ArgUtil.isNull(timeDiff)) {
+        if(ObjectUtil.isNull(timeDiff)) {
             timeDiff = new SimpleTimeDiff();
         }
         return timeDiff;
@@ -98,7 +96,7 @@ public abstract class AbstractLimitFrequency implements Limit {
     }
 
     public LimitHandler getLimitHandler() {
-        if(ArgUtil.isNull(limitHandler)) {
+        if(ObjectUtil.isNull(limitHandler)) {
             limitHandler = new DefaultLimitHandler();
         }
         return limitHandler;

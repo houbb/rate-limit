@@ -10,6 +10,7 @@ import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.rate.limit.core.core.Limit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
 import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitCount;
+import org.junit.Ignore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * ThreadLocal-限制调用次数案例
  * Created by bbhou on 2017/11/2.
  */
+@Ignore
 public class ThreadLocalLimitCountTest {
 
     private static final Log log = LogFactory.getLog(ThreadLocalLimitCountTest.class);

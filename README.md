@@ -1,11 +1,13 @@
 # 项目简介
 
-本项目用于限流。
+[rate-limit](https://github.com/houbb/rate-limit) 是一个为 java 设计的限流工具。
+
+目的是为了深入学习和使用限流，后续将会持续迭代。
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/rate-limit/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/rate-limit)
 [![Build Status](https://www.travis-ci.org/houbb/rate-limit.svg?branch=master)](https://www.travis-ci.org/houbb/rate-limit?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/houbb/rate-limit/badge.svg?branch=master)](https://coveralls.io/github/houbb/rate-limit?branch=master)
-
+[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/rate-limit/blob/master/LICENSE.txt)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/rate-limit)
 
 ## 特性
 
@@ -17,12 +19,17 @@
 
 - 支持 spring 注解的使用方式
 
-
 # 变更日志
 
-> [CHANGELOG](doc/CHANGELOG.md)
+> [CHANGELOG](CHANGELOG.md)
 
 # 快速开始
+
+## 需求
+
+- jdk 1.7 
+
+- maven 3.x+
 
 ## maven 导入
 
@@ -30,11 +37,9 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-core</artifactId>
-    <version>${maven-center.version}</version>
+    <version>${最新版本}</version>
 </dependency>
 ```
-
-`${maven-center.version}` 为 maven 仓库最新版本。
 
 ## 演示代码
 
@@ -174,11 +179,9 @@ public GlobalLimitFrequency(TimeUnit timeUnit, long interval) {
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-spring</artifactId>
-    <version>${maven-center.version}</version>
+    <version>${最新版本}</version>
 </dependency>
 ```
-
-`${maven-center.version}` 为 maven 仓库最新版本。
 
 ## 使用案例
 
@@ -280,18 +283,18 @@ public @interface LimitFrequency {
 }
 ```
 
-
 ## 测试案例
 
-| 序号 | 功能 | 测试类 |
-|:---|:---|:---|
-| 1 | all | [SpringConfigTest](rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/config/SpringConfigTest.java)|
+[SpringConfigTest](rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/config/SpringConfigTest.java)
 
+# 后期 Road-MAP
 
-# 后期设想
+- [ ] 优化 spring 整合
 
-- 注解支持继承 
+- [ ] 添加固定时间窗口算法+漏桶算法+令牌筒算法
 
-- 注解支持接口定义，所有子类皆可实现
+- [ ] 更多灵活可配置的统计维度(用户标识等)
 
-- 添加令牌筒算法+漏桶算法
+- [ ] 更加优雅灵活的创建方式 
+
+- [ ] 添加限流策略，忽略、沉睡、降级

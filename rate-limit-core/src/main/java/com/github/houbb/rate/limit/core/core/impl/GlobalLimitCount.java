@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author houbinbin
  * @see ThreadLocalLimitCount 为每一线程进行限制次数
  * Created by bbhou on 2017/9/20.
+ * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
 public class GlobalLimitCount extends AbstractLimitCount {

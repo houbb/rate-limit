@@ -11,8 +11,8 @@ import org.apiguardian.api.API;
  * 如果想对超时的部分直接进行处理。直接实现此类，并设置在 对应的 限制实体类中即可。
  * 1. 下面的方法都是在超时的场景才会调用。
  * @author houbinbin
- * @version 1.0
- * @since 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public interface LimitHandler {

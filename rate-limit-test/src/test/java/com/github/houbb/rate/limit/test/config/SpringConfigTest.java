@@ -8,11 +8,12 @@ package com.github.houbb.rate.limit.test.config;
 
 import com.github.houbb.rate.limit.test.core.config.SpringConfig;
 import com.github.houbb.rate.limit.test.core.service.UserService;
-
-import org.junit.jupiter.api.Test;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * <p> </p>
@@ -21,11 +22,14 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
  * <pre> Project: spring-framework-learn  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 0.0.1
+ * @since 0.0.1
  */
-@SpringJUnitConfig
-@ContextConfiguration(classes = {SpringConfig.class})
+//@SpringJUnitConfig
+//@ContextConfiguration(classes = {SpringConfig.class})
+@ContextConfiguration(classes = SpringConfig.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@Ignore
 public class SpringConfigTest {
 
     @Autowired
