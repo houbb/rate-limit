@@ -5,6 +5,7 @@
 
 package com.github.houbb.rate.limit.core.support.impl;
 
+import com.github.houbb.heaven.annotation.ThreadSafe;
 import org.apiguardian.api.API;
 
 /**
@@ -14,7 +15,8 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
-public class DefaultLimitHandler extends AbstractLimitHandler {
+@ThreadSafe
+public class LimitHandler extends LimitHandlerAdaptor {
 
     /**
      * 默认沉睡

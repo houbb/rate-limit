@@ -6,7 +6,8 @@
 package com.github.houbb.rate.limit.core.support.impl;
 
 
-import com.github.houbb.rate.limit.core.support.IsFirstTime;
+import com.github.houbb.heaven.annotation.ThreadSafe;
+import com.github.houbb.rate.limit.core.support.IIsFirstTime;
 
 import org.apiguardian.api.API;
 
@@ -16,7 +17,8 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
-public class SimpleIsFirstTime implements IsFirstTime {
+@ThreadSafe
+public class IsFirstTime implements IIsFirstTime {
 
     /**
      * 是否为第一次调用-标志位

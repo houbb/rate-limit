@@ -7,9 +7,11 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.support.IsFirstTime;
-import com.github.houbb.rate.limit.core.support.LimitHandler;
-import com.github.houbb.rate.limit.core.support.TimeDiff;
+import com.github.houbb.rate.limit.core.core.ILimit;
+import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.support.IIsFirstTime;
+import com.github.houbb.rate.limit.core.support.ILimitHandler;
+import com.github.houbb.rate.limit.core.support.ITimeDiffer;
 
 import org.apiguardian.api.API;
 
@@ -27,17 +29,19 @@ import java.util.concurrent.TimeUnit;
  * @see ThreadLocalLimitFrequency 每一个线程单独限制
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class GlobalLimitFrequency extends AbstractLimitFrequency {
+public class GlobalLimitFrequency implements ILimit {
 
     private static Log log = LogFactory.getLog(GlobalLimitFrequency.class);
 
-    public GlobalLimitFrequency(TimeUnit timeUnit, long interval) {
-        super(timeUnit, interval);
+    private final ILimitContext context;
+
+    public GlobalLimitFrequency(ILimitContext context) {
+        this.context = context;
     }
 
     @Override
     public synchronized void limit() {
-        IsFirstTime isFirstTime = getIsFirstTime();
+        IIsFirstTime isFirstTime = context.isFirstTime();
 
         //1. 初次调用，可以考虑不进行时间拦截。
         //2. 计算本次和上次之间的时间间隔。如果时间 < 最小间隔。则睡眠等待。
@@ -55,7 +59,7 @@ public class GlobalLimitFrequency extends AbstractLimitFrequency {
      * 1. 初始化第一次的时间调用
      */
     protected void firstTimeHandler() {
-        TimeDiff timeDiff = getTimeDiff();
+        ITimeDiffer timeDiff = context.timeDiffer();
         timeDiff.updateAfterCall();
     }
 
@@ -63,15 +67,15 @@ public class GlobalLimitFrequency extends AbstractLimitFrequency {
      * 处理时间差异
      */
     protected void handleTimeDiff() {
-        TimeDiff timeDiff = getTimeDiff();
+        ITimeDiffer timeDiff = context.timeDiffer();
 
         //1. 获取时间差
         long timeDiffInMills = timeDiff.getTimeDiff();
-
+        long intervalInMills = context.timeUnit().toMillis(context.interval());
         //2. 时间差处理
         if (timeDiffInMills < intervalInMills) {
             long sleepInMills = intervalInMills - timeDiffInMills;
-            LimitHandler limitHandler = getLimitHandler();
+            ILimitHandler limitHandler = context.limitHandler();
             try {
                 limitHandler.beforeHandle();
                 limitHandler.handle(sleepInMills);

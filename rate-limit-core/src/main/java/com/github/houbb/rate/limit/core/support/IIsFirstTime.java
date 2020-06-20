@@ -13,7 +13,7 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
-public interface IsFirstTime {
+public interface IIsFirstTime {
 
     /**
      * 是否为第一次调用

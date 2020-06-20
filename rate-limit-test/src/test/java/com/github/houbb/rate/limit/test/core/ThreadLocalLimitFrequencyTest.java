@@ -7,8 +7,9 @@ package com.github.houbb.rate.limit.test.core;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.Limit;
-import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
+import com.github.houbb.rate.limit.core.bs.LimitBs;
+import com.github.houbb.rate.limit.core.core.ILimit;
+import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitCount;
 import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitFrequency;
 import org.junit.Ignore;
 
@@ -26,7 +27,10 @@ public class ThreadLocalLimitFrequencyTest {
     /**
      * 2S 访问一次
      */
-    private static Limit LIMIT = new ThreadLocalLimitFrequency(TimeUnit.SECONDS, 2);
+    private static final ILimit LIMIT = LimitBs.newInstance()
+            .interval(2)
+            .limit(ThreadLocalLimitFrequency.class)
+            .build();
 
     static class LimitRunnable implements Runnable {
 

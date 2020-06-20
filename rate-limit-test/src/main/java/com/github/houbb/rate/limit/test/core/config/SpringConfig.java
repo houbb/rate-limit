@@ -6,6 +6,7 @@
 package com.github.houbb.rate.limit.test.core.config;
 
 
+import com.github.houbb.rate.limit.spring.annotation.EnableLimit;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -17,10 +18,10 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @ComponentScan(SpringConfig.PATH)
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableLimit
 public class SpringConfig {
 
-    public static final String PATH = "com.github.houbb.rate.limit";
+    public static final String PATH = "com.github.houbb.rate.limit.test.core.service";
 
 }
 

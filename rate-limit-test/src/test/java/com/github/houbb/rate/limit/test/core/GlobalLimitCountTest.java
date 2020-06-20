@@ -7,7 +7,8 @@ package com.github.houbb.rate.limit.test.core;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.Limit;
+import com.github.houbb.rate.limit.core.bs.LimitBs;
+import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
 import org.junit.Ignore;
 
@@ -25,8 +26,13 @@ public class GlobalLimitCountTest {
 
     /**
      * 2S 内最多运行 5 次
+     * @since 0.0.5
      */
-    private static final Limit LIMIT = new GlobalLimitCount(TimeUnit.SECONDS, 2, 5);
+    private static final ILimit LIMIT = LimitBs.newInstance()
+            .interval(2)
+            .count(5)
+            .limit(GlobalLimitCount.class)
+            .build();
 
     static class LimitRunnable implements Runnable {
 

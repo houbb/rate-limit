@@ -14,7 +14,7 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
-public interface CurrentTime {
+public interface ICurrentTime {
 
     /**
      * 当前时间的毫秒数

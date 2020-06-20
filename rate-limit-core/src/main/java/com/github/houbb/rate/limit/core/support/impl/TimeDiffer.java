@@ -6,7 +6,8 @@
 package com.github.houbb.rate.limit.core.support.impl;
 
 
-import com.github.houbb.rate.limit.core.support.TimeDiff;
+import com.github.houbb.heaven.annotation.NotThreadSafe;
+import com.github.houbb.rate.limit.core.support.ITimeDiffer;
 
 import org.apiguardian.api.API;
 
@@ -17,19 +18,17 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
-public class SimpleTimeDiff implements TimeDiff {
+public class TimeDiffer implements ITimeDiffer {
 
     /**
      * 记录上一次时间
      */
-    private long previousInMills = 0L;
+    private volatile long previousInMills = 0L;
 
     @Override
     public long getTimeDiff() {
-        //当前时间
-        long currentInMills = System.currentTimeMillis();
         //时间差值
-        return currentInMills-previousInMills;
+        return System.currentTimeMillis() - previousInMills;
     }
 
     @Override

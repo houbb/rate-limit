@@ -1,29 +1,3 @@
-# 项目简介
-
-[rate-limit](https://github.com/houbb/rate-limit) 是一个为 java 设计的限流工具。
-
-目的是为了深入学习和使用限流，后续将会持续迭代。
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/rate-limit/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/rate-limit)
-[![Build Status](https://www.travis-ci.org/houbb/rate-limit.svg?branch=master)](https://www.travis-ci.org/houbb/rate-limit?branch=master)
-[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/rate-limit/blob/master/LICENSE.txt)
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/rate-limit)
-
-## 特性
-
-- 支持限制访问频率
-
-- 支持限制固定时间内次数(暂时使用固定时间，不够平滑)
-
-- 支持全局模式、ThreadLocal 模式
-
-- 支持 spring 注解的使用方式
-
-# 变更日志
-
-> [CHANGELOG](CHANGELOG.md)
-
-# 快速开始
 
 ## 需求
 
@@ -59,11 +33,7 @@ public class GlobalLimitFrequencyTest {
     /**
      * 2S 访问一次
      */
-    private static final ILimit LIMIT = LimitBs.newInstance()
-                .interval(2)
-                .count(5)
-                .limit(GlobalLimitCount.class)
-                .build();
+    private static Limit LIMIT = new GlobalLimitFrequency(TimeUnit.SECONDS, 2);
 
     static class LimitRunnable implements Runnable {
 
@@ -111,6 +81,61 @@ public class GlobalLimitFrequencyTest {
 
 每一个线程的访问控制互不影响。
 
+### 指定时间内的次数
+
+- GlobalLimitCount.java
+
+```java
+/**
+ * 构造器
+ * @param timeUnit 时间单位
+ * @param interval 时间间隔
+ * @param count 访问次数
+ */
+public GlobalLimitCount(TimeUnit timeUnit, long interval, int count) {
+}
+```
+
+- ThreadLocalLimitCount.java
+
+```java
+/**
+ * 构造器
+ * @param timeUnit 时间单位
+ * @param interval 时间间隔
+ * @param count 访问次数
+ */
+public ThreadLocalLimitCount(TimeUnit timeUnit, long interval, int count) {
+}
+```
+
+
+### 固定访问间隔
+
+- ThreadLocalLimitFrequency.java
+
+```java
+/**
+ * 构造器
+ * @param timeUnit 时间单位
+ * @param interval 时间间隔
+ */
+public ThreadLocalLimitFrequency(TimeUnit timeUnit, long interval) {
+}
+```
+
+- GlobalLimitFrequency.java
+
+```java
+/**
+ * 构造器
+ * @param timeUnit 时间单位
+ * @param interval 时间间隔
+ */
+public GlobalLimitFrequency(TimeUnit timeUnit, long interval) {
+}
+```
+
 ## 测试案例
 
 | 序号 | 功能 | 测试类 |
@@ -119,15 +144,3 @@ public class GlobalLimitFrequencyTest {
 | 2 | `ThreadLocalLimitCount` | [ThreadLocalLimitCountTest](https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/ThreadLocalLimitCountTest.java)|
 | 3 | `GlobalLimitFrequency` | [GlobalLimitFrequencyTest](https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/GlobalLimitFrequencyTest.java)|
 | 4 | `ThreadLocalLimitFrequency` | [ThreadLocalLimitFrequencyTest](https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/ThreadLocalLimitFrequencyTest.java)|
-
-# 拓展阅读
-
-[spring 整合使用](doc/user/02-spring.md)
-
-# 后期 Road-MAP
-
-- [ ] 添加固定时间窗口算法+漏桶算法+令牌筒算法
-
-- [ ] 更多灵活可配置的统计维度(用户标识等)
-
-- [ ] 添加限流策略，忽略、沉睡、降级

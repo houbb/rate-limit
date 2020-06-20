@@ -7,25 +7,26 @@ package com.github.houbb.rate.limit.test.core;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.Limit;
+import com.github.houbb.rate.limit.core.bs.LimitBs;
+import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
-import org.junit.Ignore;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * 全局-限制访问频率
  * Created by bbhou on 2017/11/2.
  */
-@Ignore
 public class GlobalLimitFrequencyTest {
 
     private static final Log log = LogFactory.getLog(GlobalLimitFrequencyTest.class);
 
     /**
      * 2S 访问一次
+     * @since 0.0.3
      */
-    private static Limit LIMIT = new GlobalLimitFrequency(TimeUnit.SECONDS, 2);
+    private static final ILimit LIMIT = LimitBs.newInstance()
+            .interval(2)
+            .limit(GlobalLimitFrequency.class)
+            .build();
 
     static class LimitRunnable implements Runnable {
 

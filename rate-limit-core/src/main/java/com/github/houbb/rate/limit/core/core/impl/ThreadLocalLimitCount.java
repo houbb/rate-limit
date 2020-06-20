@@ -5,9 +5,9 @@
 
 package com.github.houbb.rate.limit.core.core.impl;
 
+import com.github.houbb.rate.limit.core.core.ILimit;
+import com.github.houbb.rate.limit.core.core.ILimitContext;
 import org.apiguardian.api.API;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * 本地限制。
@@ -17,17 +17,14 @@ import java.util.concurrent.TimeUnit;
  * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class ThreadLocalLimitCount extends AbstractLimitCount {
+public class ThreadLocalLimitCount implements ILimit {
 
-    /**
-     * 构造器
-     * @param timeUnit 时间单位
-     * @param interval 时间
-     * @param count 访问次数
-     */
-    public ThreadLocalLimitCount(TimeUnit timeUnit, long interval, int count) {
-        super(timeUnit, interval, count);
+    private final ILimitContext context;
+
+    public ThreadLocalLimitCount(ILimitContext context) {
+        this.context = context;
     }
+
 
     @Override
     public void limit() {
@@ -44,7 +41,7 @@ public class ThreadLocalLimitCount extends AbstractLimitCount {
 
         @Override
         protected synchronized GlobalLimitCount initialValue() {
-            return new GlobalLimitCount(timeUnit, interval, count);
+            return new GlobalLimitCount(context);
         }
 
     };

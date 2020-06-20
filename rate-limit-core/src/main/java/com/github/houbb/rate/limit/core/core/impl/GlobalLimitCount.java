@@ -7,11 +7,15 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.support.CurrentTime;
-import com.github.houbb.rate.limit.core.support.LimitHandler;
+import com.github.houbb.rate.limit.core.core.ILimit;
+import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.support.ICurrentTime;
+import com.github.houbb.rate.limit.core.support.ILimitHandler;
 
 import org.apiguardian.api.API;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,29 +26,42 @@ import java.util.concurrent.TimeUnit;
  * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class GlobalLimitCount extends AbstractLimitCount {
+public class GlobalLimitCount implements ILimit {
 
     private static Log log = LogFactory.getLog(GlobalLimitCount.class);
 
     /**
-     * 构造器
-     * @param timeUnit 时间单位
-     * @param interval 时间间隔
-     * @param count 访问次数
+     * 上下文
+     * @since 0.0.3
      */
-    public GlobalLimitCount(TimeUnit timeUnit, long interval, int count) {
-        super(timeUnit, interval, count);
+    private final ILimitContext context;
+
+    /**
+     * 用于存放时间的队列
+     * @since 0.0.3
+     */
+    private final BlockingQueue<Long> timeBlockQueue;
+
+    /**
+     * 构造器
+     * @param context 上下文
+     * @since 0.0.3
+     */
+    public GlobalLimitCount(ILimitContext context) {
+        this.context = context;
+        this.timeBlockQueue = new ArrayBlockingQueue<>(context.count());
     }
 
     @Override
     public synchronized void limit() {
-        CurrentTime currentTime = getCurrentTime();
+        ICurrentTime currentTime = context.currentTime();
 
         long currentTimeInMills = currentTime.currentTimeInMills();
 
         //1. 将时间放入队列中 如果放得下，直接可以执行。反之，需要等待
         //2. 等待完成之后，将第一个元素剔除。将最新的时间加入队列中。
         boolean offerResult = timeBlockQueue.offer(currentTimeInMills);
+        long intervalInMills = context.timeUnit().toMillis(context.interval());
         if(!offerResult) {
             //获取队列头的元素
             long headTimeInMills = timeBlockQueue.poll();
@@ -54,7 +71,7 @@ public class GlobalLimitCount extends AbstractLimitCount {
             if(intervalInMills > durationInMills) {
                 //需要沉睡的时间
                 long sleepInMills = intervalInMills - durationInMills;
-                LimitHandler limitHandler = getLimitHandler();
+                ILimitHandler limitHandler = context.limitHandler();
                 try {
                     limitHandler.beforeHandle();
                     limitHandler.handle(sleepInMills);
@@ -69,7 +86,5 @@ public class GlobalLimitCount extends AbstractLimitCount {
         }
 
     }
-
-
 
 }

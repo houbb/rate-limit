@@ -6,7 +6,7 @@
 package com.github.houbb.rate.limit.core.support.impl;
 
 
-import com.github.houbb.rate.limit.core.support.CurrentTime;
+import com.github.houbb.rate.limit.core.support.ICurrentTime;
 
 import org.apiguardian.api.API;
 
@@ -16,7 +16,7 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
-public class SimpleCurrentTime implements CurrentTime {
+public class CurrentTime implements ICurrentTime {
 
     @Override
     public long currentTimeInMills() {

@@ -7,8 +7,9 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 
 
-import com.github.houbb.rate.limit.core.core.Limit;
+import com.github.houbb.rate.limit.core.core.ILimit;
 
+import com.github.houbb.rate.limit.core.core.ILimitContext;
 import org.apiguardian.api.API;
 
 import java.util.concurrent.TimeUnit;
@@ -24,44 +25,29 @@ import java.util.concurrent.TimeUnit;
  * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class ThreadLocalLimitFrequency implements Limit {
+public class ThreadLocalLimitFrequency implements ILimit {
 
-    /**
-     * 时间单位
-     */
-    private TimeUnit timeUnit;
+    private final ILimitContext context;
 
-    /**
-     * 时间间隔
-     */
-    private long interval;
-
-    /**
-     * 构造器
-     * @param timeUnit 时间单位
-     * @param interval 时间间隔
-     */
-    public ThreadLocalLimitFrequency(TimeUnit timeUnit, long interval) {
-        this.timeUnit = timeUnit;
-        this.interval = interval;
+    public ThreadLocalLimitFrequency(ILimitContext context) {
+        this.context = context;
     }
 
     @Override
     public void limit() {
-        AbstractLimitFrequency abstractLimitFrequency = threadLocal.get();
-        abstractLimitFrequency.limit();
+        ILimit limit = threadLocal.get();
+        limit.limit();
     }
-
 
     /**
      * 线程
      * 1. 保证每一个线程都有一份独立的线程
      */
-    private ThreadLocal<AbstractLimitFrequency> threadLocal = new ThreadLocal<AbstractLimitFrequency>(){
+    private ThreadLocal<ILimit> threadLocal = new ThreadLocal<ILimit>(){
 
         @Override
-        protected synchronized AbstractLimitFrequency initialValue() {
-            return new GlobalLimitFrequency(timeUnit, interval);
+        protected synchronized ILimit initialValue() {
+            return new GlobalLimitFrequency(context);
         }
 
 
