@@ -10,7 +10,7 @@ import org.apiguardian.api.API;
 /**
  *
  * @author bbhou
- * @date 2017/9/21
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public interface IsFirstTime {

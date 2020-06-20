@@ -11,7 +11,7 @@ import org.apiguardian.api.API;
  * 当前时间
  *
  * @author bbhou
- * @date 2017/9/21
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public interface CurrentTime {

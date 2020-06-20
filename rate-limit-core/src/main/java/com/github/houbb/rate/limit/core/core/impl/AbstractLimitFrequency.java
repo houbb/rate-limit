@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * 9223372036854775807 LONG 的最大值。不用关心太大的问题。
  *
  * @author bbhou
- * @date 2017/9/20
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public abstract class AbstractLimitFrequency implements Limit {

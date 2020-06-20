@@ -11,7 +11,7 @@ import org.apiguardian.api.API;
  *
  * 限流核心接口
  * @author bbhou
- * @date 2017/9/20
+ * @since 0.0.1
  * @since 0.0.1
  */
 @API(status = API.Status.MAINTAINED)

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * 1. 对于每一个线程都有对应的计时基准。
  *
  * @author bbhou
- * @date 2017/9/20
+ * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
 public class ThreadLocalLimitCount extends AbstractLimitCount {

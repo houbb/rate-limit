@@ -11,7 +11,7 @@ import org.apiguardian.api.API;
  * 限制模式
  *
  * @author bbhou
- * @date 2017/9/22
+ * @since 0.0.1
  */
 @API(status = API.Status.MAINTAINED)
 public enum LimitModeEnum {

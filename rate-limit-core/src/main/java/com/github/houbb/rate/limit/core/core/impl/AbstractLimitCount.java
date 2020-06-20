@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * 在一定的时间内只能调用一个方法多少次。
  *
  * @author bbhou
- * @date 2017/9/21
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public abstract class AbstractLimitCount implements Limit {

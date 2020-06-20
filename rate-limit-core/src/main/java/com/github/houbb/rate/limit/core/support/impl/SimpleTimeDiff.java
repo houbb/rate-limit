@@ -14,7 +14,7 @@ import org.apiguardian.api.API;
  * 简单的时间差异实现
  *
  * @author bbhou
- * @date 2017/9/21
+ * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
 public class SimpleTimeDiff implements TimeDiff {
