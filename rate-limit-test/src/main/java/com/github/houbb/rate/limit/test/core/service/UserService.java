@@ -7,9 +7,8 @@ package com.github.houbb.rate.limit.test.core.service;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
-import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
-import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitCount;
+import com.github.houbb.rate.limit.core.core.impl.LimitCountSlideWindow;
+import com.github.houbb.rate.limit.core.core.impl.LimitFrequencySlideWindows;
 import com.github.houbb.rate.limit.spring.annotation.Limit;
 import org.springframework.stereotype.Service;
 
@@ -28,23 +27,13 @@ public class UserService {
 
     private static final Log log = LogFactory.getLog(UserService.class);
 
-    @Limit(interval = 2)
-    public void limitFrequencyThreadLocal() {
+    @Limit(interval = 2, limit = LimitFrequencySlideWindows.class)
+    public void limitFrequencySlide() {
         log.info("{}", Thread.currentThread().getName());
     }
 
-    @Limit(interval = 2, limit = GlobalLimitFrequency.class)
-    public void limitFrequencyGlobal(final long id) {
-        log.info("{}", Thread.currentThread().getName());
-    }
-
-    @Limit(interval = 2, count = 5, limit = ThreadLocalLimitCount.class)
-    public void limitCountThreadLocal() {
-        log.info("{}", Thread.currentThread().getName());
-    }
-
-    @Limit(interval = 2, count = 5, limit = GlobalLimitCount.class)
-    public void limitCountGlobal() {
+    @Limit(interval = 2, count = 5, limit = LimitCountSlideWindow.class)
+    public void limitCountSlide() {
         log.info("{}", Thread.currentThread().getName());
     }
 

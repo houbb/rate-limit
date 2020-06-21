@@ -9,33 +9,28 @@ import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.rate.limit.core.bs.LimitBs;
 import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.GlobalLimitCount;
-import org.junit.Ignore;
-
-
-import java.util.concurrent.TimeUnit;
+import com.github.houbb.rate.limit.core.core.impl.LimitCountFixedWindows;
 
 /**
  * 全局-限制调用次数案例
  * Created by bbhou on 2017/11/2.
+ * @since 0.0.4
  */
-@Ignore
-public class GlobalLimitCountTest {
+public class LimitCountFixedWindowTest {
 
-    private static final Log log = LogFactory.getLog(GlobalLimitCountTest.class);
+    private static final Log log = LogFactory.getLog(LimitCountFixedWindowTest.class);
 
     /**
      * 2S 内最多运行 5 次
      * @since 0.0.5
      */
     private static final ILimit LIMIT = LimitBs.newInstance()
-            .interval(2)
+            .interval(5)
             .count(5)
-            .limit(GlobalLimitCount.class)
+            .limit(LimitCountFixedWindows.class)
             .build();
 
     static class LimitRunnable implements Runnable {
-
         @Override
         public void run() {
             for(int i = 0; i < 10; i++) {
@@ -46,7 +41,6 @@ public class GlobalLimitCountTest {
     }
 
     public static void main(String[] args) {
-        new Thread(new LimitRunnable()).start();
         new Thread(new LimitRunnable()).start();
     }
 

@@ -20,11 +20,6 @@ public class UserService {
 
     private static final Log log = LogFactory.getLog(UserService.class);
 
-    @Limit(interval = 2)
-    public void limitFrequencyThreadLocal() {
-        log.info("{}", Thread.currentThread().getName());
-    }
-
     @Limit(interval = 2, limit = GlobalLimitFrequency.class)
     public void limitFrequencyGlobal(final long id) {
         log.info("{}", Thread.currentThread().getName());
@@ -81,7 +76,7 @@ public @interface Limit {
      * @return 限制策略
      * @since 0.0.3
      */
-    Class<? extends ILimit> limit() default ThreadLocalLimitFrequency.class;
+    Class<? extends ILimit> limit() default LimitFrequencyFixed.class;
 
 }
 ```

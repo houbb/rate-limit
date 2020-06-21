@@ -5,7 +5,7 @@ import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.ILimitContext;
 import com.github.houbb.rate.limit.core.core.impl.LimitContext;
-import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitFrequency;
+import com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow;
 import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
 import com.github.houbb.rate.limit.core.support.ICurrentTime;
 import com.github.houbb.rate.limit.core.support.IIsFirstTime;
@@ -84,7 +84,7 @@ public final class LimitBs {
      * 限制策略
      * @since 0.0.3
      */
-    private Class<? extends ILimit> limit = ThreadLocalLimitFrequency.class;
+    private Class<? extends ILimit> limit = LimitFrequencyFixedWindow.class;
 
     private LimitBs currentTime(ICurrentTime currentTime) {
         this.currentTime = currentTime;

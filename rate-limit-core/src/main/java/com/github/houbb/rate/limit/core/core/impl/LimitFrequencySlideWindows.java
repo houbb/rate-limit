@@ -15,10 +15,8 @@ import com.github.houbb.rate.limit.core.support.ITimeDiffer;
 
 import org.apiguardian.api.API;
 
-import java.util.concurrent.TimeUnit;
-
 /**
- * 全局限制调用频率
+ * 滑动窗口限制调用频率
  * 1. 线程安全问题
  * 2. 如果时间间隔太长，需要保存问题 (ehcache)
  * 3. 计时器问题 (StopWatch)
@@ -26,16 +24,16 @@ import java.util.concurrent.TimeUnit;
  *
  * @author houbinbin
  * Created by bbhou on 2017/9/20.
- * @see ThreadLocalLimitFrequency 每一个线程单独限制
+ * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class GlobalLimitFrequency implements ILimit {
+public class LimitFrequencySlideWindows implements ILimit {
 
-    private static Log log = LogFactory.getLog(GlobalLimitFrequency.class);
+    private static Log log = LogFactory.getLog(LimitFrequencySlideWindows.class);
 
     private final ILimitContext context;
 
-    public GlobalLimitFrequency(ILimitContext context) {
+    public LimitFrequencySlideWindows(ILimitContext context) {
         this.context = context;
     }
 
@@ -51,7 +49,6 @@ public class GlobalLimitFrequency implements ILimit {
         } else {
             handleTimeDiff();
         }
-
     }
 
     /**

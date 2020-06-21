@@ -43,33 +43,28 @@
 
 ## 演示代码
 
-- GlobalLimitFrequencyTest.java
+- LimitFrequencyFixedWindowTest.java
 
-全局的限制访问频率。每次访问间隔为 2S。
+固定时间窗口实现的频率限制：
 
 ```java
-/**
- * 全局-限制访问频率
- * Created by bbhou on 2017/11/2.
- */
-public class GlobalLimitFrequencyTest {
+public class LimitFrequencyFixedWindowTest {
 
-    private static final Log log = LogFactory.getLog(GlobalLimitFrequencyTest.class);
+    private static final Log log = LogFactory.getLog(LimitFrequencyFixedWindowTest.class);
 
     /**
-     * 2S 访问一次
+     * 2S 内最多运行 5 次
+     * @since 0.0.5
      */
     private static final ILimit LIMIT = LimitBs.newInstance()
-                .interval(2)
-                .count(5)
-                .limit(GlobalLimitCount.class)
-                .build();
+            .interval(1)
+            .limit(LimitFrequencyFixedWindow.class)
+            .build();
 
     static class LimitRunnable implements Runnable {
-
         @Override
         public void run() {
-            for (int i = 0; i < 4; i++) {
+            for(int i = 0; i < 5; i++) {
                 LIMIT.limit();
                 log.info("{}-{}", Thread.currentThread().getName(), i);
             }
@@ -78,47 +73,26 @@ public class GlobalLimitFrequencyTest {
 
     public static void main(String[] args) {
         new Thread(new LimitRunnable()).start();
-        new Thread(new LimitRunnable()).start();
     }
 
 }
 ```
 
+
 - 日志
 
 ```
-23:18:46.466 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-2-0
-23:18:48.469 [Thread-1] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-1-0
-23:18:50.470 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-2-1
-23:18:52.473 [Thread-1] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-1-1
-23:18:54.478 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-2-2
-23:18:56.480 [Thread-1] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-1-2
-23:18:58.484 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-2-3
-23:19:00.487 [Thread-1] INFO  com.github.houbb.rate.limit.test.core.GlobalLimitFrequencyTest - Thread-1-3
+19:41:01.661 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:01.667 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-0
+19:41:02.991 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:02.991 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-1
+19:41:04.321 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:04.321 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-2
+19:41:05.652 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:05.652 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-3
+19:41:06.983 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:06.983 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-4
 ```
-
-## 功能说明
-
-### 模式说明
-
-- Global 全局模式
-
-在一个方法中，锁是线程间共享的。线程必须等待其他线程执行完成后，获取锁方可执行。
-
-- ThreadLocal 模式
-
-在一个方法中，锁是方法间独立的。
-
-每一个线程的访问控制互不影响。
-
-## 测试案例
-
-| 序号 | 功能 | 测试类 |
-|:---|:---|:---|
-| 1 | `GlobalLimitCount` | [GlobalLimitCountTest](https://github.com/houbb/rate-limit/blob/master/https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/GlobalLimitCountTest.java)|
-| 2 | `ThreadLocalLimitCount` | [ThreadLocalLimitCountTest](https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/ThreadLocalLimitCountTest.java)|
-| 3 | `GlobalLimitFrequency` | [GlobalLimitFrequencyTest](https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/GlobalLimitFrequencyTest.java)|
-| 4 | `ThreadLocalLimitFrequency` | [ThreadLocalLimitFrequencyTest](https://github.com/houbb/rate-limit/blob/master/rate-limit-test/src/test/java/com/github/houbb/rate/limit/test/core/ThreadLocalLimitFrequencyTest.java)|
 
 # 拓展阅读
 
@@ -126,7 +100,9 @@ public class GlobalLimitFrequencyTest {
 
 # 后期 Road-MAP
 
-- [ ] 添加固定时间窗口算法+漏桶算法+令牌筒算法
+- [ ] 添加漏桶算法
+
+- [ ] 令牌筒算法
 
 - [ ] 更多灵活可配置的统计维度(用户标识等)
 

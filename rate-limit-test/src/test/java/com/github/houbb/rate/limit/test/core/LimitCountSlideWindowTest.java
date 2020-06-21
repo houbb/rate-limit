@@ -9,30 +9,33 @@ import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.rate.limit.core.bs.LimitBs;
 import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.GlobalLimitFrequency;
+import com.github.houbb.rate.limit.core.core.impl.LimitCountSlideWindow;
+import org.junit.Ignore;
 
 /**
- * 全局-限制访问频率
+ * 全局-限制调用次数案例
  * Created by bbhou on 2017/11/2.
  */
-public class GlobalLimitFrequencyTest {
+@Ignore
+public class LimitCountSlideWindowTest {
 
-    private static final Log log = LogFactory.getLog(GlobalLimitFrequencyTest.class);
+    private static final Log log = LogFactory.getLog(LimitCountSlideWindowTest.class);
 
     /**
-     * 2S 访问一次
-     * @since 0.0.3
+     * 2S 内最多运行 5 次
+     * @since 0.0.5
      */
     private static final ILimit LIMIT = LimitBs.newInstance()
             .interval(2)
-            .limit(GlobalLimitFrequency.class)
+            .count(5)
+            .limit(LimitCountSlideWindow.class)
             .build();
 
     static class LimitRunnable implements Runnable {
 
         @Override
         public void run() {
-            for (int i = 0; i < 4; i++) {
+            for(int i = 0; i < 10; i++) {
                 LIMIT.limit();
                 log.info("{}-{}", Thread.currentThread().getName(), i);
             }

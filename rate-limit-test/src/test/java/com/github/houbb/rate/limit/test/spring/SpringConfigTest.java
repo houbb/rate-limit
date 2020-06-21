@@ -34,16 +34,16 @@ public class SpringConfigTest {
     private UserService userService;
 
     @Test
-    public void limitFrequencyThreadLocalTest() {
+    public void limitCountSlideTest() {
         for(int i = 0; i < 5; i++) {
-            userService.limitFrequencyThreadLocal();
+            userService.limitCountSlide();
         }
     }
 
     @Test
-    public void limitCountThreadLocalTest() {
+    public void limitFrequencySlideTest() {
         for(int i = 0; i < 10; i++) {
-            userService.limitCountThreadLocal();
+            userService.limitFrequencySlide();
         }
     }
 

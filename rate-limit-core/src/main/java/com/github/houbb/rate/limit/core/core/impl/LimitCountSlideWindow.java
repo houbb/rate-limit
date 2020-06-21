@@ -16,19 +16,17 @@ import org.apiguardian.api.API;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
- * 全局的限制次数
+ * 滑动窗口限制次数
  * @author houbinbin
- * @see ThreadLocalLimitCount 为每一线程进行限制次数
  * Created by bbhou on 2017/9/20.
  * @since 0.0.1
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class GlobalLimitCount implements ILimit {
+public class LimitCountSlideWindow implements ILimit {
 
-    private static Log log = LogFactory.getLog(GlobalLimitCount.class);
+    private static Log log = LogFactory.getLog(LimitCountSlideWindow.class);
 
     /**
      * 上下文
@@ -47,7 +45,7 @@ public class GlobalLimitCount implements ILimit {
      * @param context 上下文
      * @since 0.0.3
      */
-    public GlobalLimitCount(ILimitContext context) {
+    public LimitCountSlideWindow(ILimitContext context) {
         this.context = context;
         this.timeBlockQueue = new ArrayBlockingQueue<>(context.count());
     }

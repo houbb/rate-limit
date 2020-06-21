@@ -9,9 +9,9 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-    </Appenders>
+    </Appenders>s
     <Loggers>
-        <Root level="trace">
+        <Root level="TRACE">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
