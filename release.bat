@@ -1,7 +1,7 @@
 :: 用于 release 当前项目(windows)
 :: author: houbb
 :: LastUpdateTime:  2018-1-22 09:08:52
-:: 用法：双击运行，或者当前路径 cmd 直接输入 release.bat
+:: 用法：双击运行，或者当前路径 cmd 直接输入 ck
 
 :: 关闭回显
 @echo OFF
