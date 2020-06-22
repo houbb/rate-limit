@@ -118,7 +118,7 @@ public class LimitSlideWindow extends LimitAdaptor {
      * @since 0.0.5
      */
     @Override
-    public synchronized void acquire() {
+    public synchronized boolean acquire() {
         long currentSum = counter.get();
         if(currentSum > limitContext.count()) {
             // 循环等待
@@ -131,6 +131,7 @@ public class LimitSlideWindow extends LimitAdaptor {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOG.error("[Limit] slide windows meet ex", e);
+                return false;
             }
         }
 
@@ -138,6 +139,7 @@ public class LimitSlideWindow extends LimitAdaptor {
         array[index] = array[index]+1;
         counter.incrementAndGet();
         LOG.info("[Limit] current counter is " + counter.get());
+        return true;
     }
 
 }

@@ -74,7 +74,7 @@ public class LimitFixedWindow extends LimitAdaptor {
     }
 
     @Override
-    public synchronized void acquire() {
+    public synchronized boolean acquire() {
 
         // 超过阈值，则进行等待
         if (counter.get() >= this.context.count()) {
@@ -86,12 +86,15 @@ public class LimitFixedWindow extends LimitAdaptor {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOG.error("[Limit] fixed count is interrupt", e);
+                return false;
             }
         }
 
         // 结束
         int value = this.counter.incrementAndGet();
         LOG.debug("[Limit] fixed count is " + value);
+
+        return true;
     }
 
     /**

@@ -63,7 +63,7 @@ public class LimitSlideWindowQueue extends LimitAdaptor {
     }
 
     @Override
-    public synchronized void acquire() {
+    public synchronized boolean acquire() {
         long currentTimeInMills = currentTime.currentTimeInMills();
 
         //1. 将时间放入队列中 如果放得下，直接可以执行。反之，需要等待
@@ -87,6 +87,8 @@ public class LimitSlideWindowQueue extends LimitAdaptor {
             boolean addResult = timeBlockQueue.offer(currentTimeInMills);
             LOG.debug("[Limit] acquire add result: " + addResult);
         }
+
+        return true;
     }
 
 }

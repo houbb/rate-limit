@@ -10,8 +10,8 @@ import com.github.houbb.rate.limit.core.core.ILimit;
 public class LimitAdaptor implements ILimit {
 
     @Override
-    public void acquire() {
-
+    public boolean acquire() {
+        return false;
     }
 
     @Override

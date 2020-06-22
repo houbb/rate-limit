@@ -48,7 +48,7 @@ public class LimitSemaphore extends LimitAdaptor {
     }
 
     @Override
-    public synchronized void acquire() {
+    public synchronized boolean acquire() {
         try {
             LOG.debug("[Limit] start acquire");
             this.semaphore.acquire(1);
@@ -56,7 +56,10 @@ public class LimitSemaphore extends LimitAdaptor {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             LOG.error("[Limit] semaphore meet ex: ", e);
+            return false;
         }
+
+        return true;
     }
 
     @Override
