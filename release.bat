@@ -1,7 +1,7 @@
 :: 用于 release 当前项目(windows)
 :: author: houbb
 :: LastUpdateTime:  2018-1-22 09:08:52
-:: 用法：双击运行，或者当前路径 cmd 直接输入 ck
+:: 用法：双击运行，或者当前路径 cmd 直接输入 release.bat
 
 :: 关闭回显
 @echo OFF
@@ -10,9 +10,9 @@ ECHO "============================= RELEASE START..."
 
 :: 版本号信息(需要手动指定)
 :::: 旧版本名称
-SET version=0.0.4
+SET version=0.0.5
 :::: 新版本名称
-SET newVersion=0.0.5
+SET newVersion=0.0.6
 :::: 组织名称
 SET groupName=com.github.houbb
 :::: 项目名称

@@ -20,26 +20,26 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 固定时间窗口
  * @author houbinbin
  * Created by bbhou on 2017/9/20.
- * @since 0.0.4
+ * @since 0.0.5
  */
 @API(status = API.Status.EXPERIMENTAL)
 public class LimitFixedWindow extends LimitAdaptor {
 
     /**
      * 日志
-     * @since 0.0.4
+     * @since 0.0.5
      */
     private static final Log LOG = LogFactory.getLog(LimitFixedWindow.class);
 
     /**
      * 上下文
-     * @since 0.0.4
+     * @since 0.0.5
      */
     private final ILimitContext context;
 
     /**
      * 计数器
-     * @since 0.0.4
+     * @since 0.0.5
      */
     private AtomicInteger counter = new AtomicInteger(0);
 
@@ -48,14 +48,14 @@ public class LimitFixedWindow extends LimitAdaptor {
      *
      * 避免不同线程的 notify+wait 报错问题
      *
-     * @since 0.0.4
+     * @since 0.0.5
      */
     private CountDownLatch latch = new CountDownLatch(1);
 
     /**
      * 构造器
      * @param context 上下文
-     * @since 0.0.4
+     * @since 0.0.5
      */
     public LimitFixedWindow(ILimitContext context) {
         this.context = context;
@@ -82,6 +82,7 @@ public class LimitFixedWindow extends LimitAdaptor {
                 LOG.debug("[Limit] fixed count need wait for notify.");
                 latch.await();
                 LOG.debug("[Limit] fixed count need wait end ");
+                this.latch = new CountDownLatch(1);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOG.error("[Limit] fixed count is interrupt", e);
@@ -90,13 +91,12 @@ public class LimitFixedWindow extends LimitAdaptor {
 
         // 结束
         int value = this.counter.incrementAndGet();
-        this.latch = new CountDownLatch(1);
         LOG.debug("[Limit] fixed count is " + value);
     }
 
     /**
      * 初始化计数器
-     * @since 0.0.4
+     * @since 0.0.5
      */
     private void initCounter() {
         LOG.debug("[Limit] fixed count init counter start");
@@ -111,7 +111,6 @@ public class LimitFixedWindow extends LimitAdaptor {
         }  else {
             this.counter = new AtomicInteger(0);
         }
-
     }
 
 }

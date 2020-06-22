@@ -35,14 +35,6 @@ public class LimitContext implements ILimitContext {
      */
     private int count;
 
-    private ICurrentTime currentTime;
-
-    private IIsFirstTime isFirstTime;
-
-    private ILimitHandler limitHandler;
-
-    private ITimeDiffer timeDiffer;
-
     public static LimitContext newInstance() {
         return new LimitContext();
     }
@@ -74,46 +66,6 @@ public class LimitContext implements ILimitContext {
 
     public LimitContext count(int count) {
         this.count = count;
-        return this;
-    }
-
-    @Override
-    public ICurrentTime currentTime() {
-        return currentTime;
-    }
-
-    public LimitContext currentTime(ICurrentTime currentTime) {
-        this.currentTime = currentTime;
-        return this;
-    }
-
-    @Override
-    public IIsFirstTime isFirstTime() {
-        return isFirstTime;
-    }
-
-    public LimitContext isFirstTime(IIsFirstTime isFirstTime) {
-        this.isFirstTime = isFirstTime;
-        return this;
-    }
-
-    @Override
-    public ILimitHandler limitHandler() {
-        return limitHandler;
-    }
-
-    public LimitContext limitHandler(ILimitHandler limitHandler) {
-        this.limitHandler = limitHandler;
-        return this;
-    }
-
-    @Override
-    public ITimeDiffer timeDiffer() {
-        return timeDiffer;
-    }
-
-    public LimitContext timeDiffer(ITimeDiffer timeDiffer) {
-        this.timeDiffer = timeDiffer;
         return this;
     }
 

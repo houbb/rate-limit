@@ -41,12 +41,4 @@ public interface ILimitContext {
      */
     int count();
 
-    ICurrentTime currentTime();
-
-    IIsFirstTime isFirstTime();
-
-    ILimitHandler limitHandler();
-
-    ITimeDiffer timeDiffer();
-
 }

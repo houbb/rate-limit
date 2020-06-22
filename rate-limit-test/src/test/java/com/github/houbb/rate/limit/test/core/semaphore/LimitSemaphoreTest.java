@@ -1,4 +1,4 @@
-package com.github.houbb.rate.limit.test.semaphore;
+package com.github.houbb.rate.limit.test.core.semaphore;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;

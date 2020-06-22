@@ -15,6 +15,7 @@ import org.apiguardian.api.API;
  * @since 0.0.1
  */
 @API(status = API.Status.INTERNAL)
+@Deprecated
 public interface ILimitHandler {
 
     /**

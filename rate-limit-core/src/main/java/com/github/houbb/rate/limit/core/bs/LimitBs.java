@@ -5,7 +5,7 @@ import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.ILimitContext;
 import com.github.houbb.rate.limit.core.core.impl.LimitContext;
-import com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval;
+import com.github.houbb.rate.limit.core.core.impl.LimitFixedWindow;
 import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
 import com.github.houbb.rate.limit.core.support.ICurrentTime;
 import com.github.houbb.rate.limit.core.support.IIsFirstTime;
@@ -53,30 +53,6 @@ public final class LimitBs {
     }
 
     /**
-     * 当前时间
-     * @since 0.0.3
-     */
-    private ICurrentTime currentTime = Instances.singleton(CurrentTime.class);
-
-    /**
-     * 超时限制的处理者
-     * @since 0.0.3
-     */
-    private ILimitHandler limitHandler = Instances.singleton(LimitHandler.class);
-
-    /**
-     * 是否为第一次
-     * @since 0.0.3
-     */
-    private IIsFirstTime isFirstTime = Instances.singleton(IsFirstTime.class);
-
-    /**
-     * 时间差异
-     * @since 0.0.3
-     */
-    private ITimeDiffer timeDiffer = Instances.singleton(TimeDiffer.class);
-
-    /**
      * 时间单位, 默认为秒
      * @see TimeUnit 时间单位
      * @since 0.0.1
@@ -101,27 +77,7 @@ public final class LimitBs {
      * 限制策略
      * @since 0.0.3
      */
-    private Class<? extends ILimit> limit = LimitFixedInterval.class;
-
-    private LimitBs currentTime(ICurrentTime currentTime) {
-        this.currentTime = currentTime;
-        return this;
-    }
-
-    private LimitBs limitHandler(ILimitHandler limitHandler) {
-        this.limitHandler = limitHandler;
-        return this;
-    }
-
-    private LimitBs isFirstTime(IIsFirstTime isFirstTime) {
-        this.isFirstTime = isFirstTime;
-        return this;
-    }
-
-    private LimitBs timeDiffer(ITimeDiffer timeDiffer) {
-        this.timeDiffer = timeDiffer;
-        return this;
-    }
+    private Class<? extends ILimit> limit = LimitFixedWindow.class;
 
     /**
      * 设置时间单位
@@ -185,11 +141,7 @@ public final class LimitBs {
             ILimitContext context = LimitContext.newInstance()
                     .timeUnit(timeUnit)
                     .count(count)
-                    .currentTime(currentTime)
                     .interval(interval)
-                    .isFirstTime(isFirstTime)
-                    .limitHandler(limitHandler)
-                    .timeDiffer(timeDiffer)
                     ;
 
             Constructor constructor = this.limit.getConstructor(ILimitContext.class);

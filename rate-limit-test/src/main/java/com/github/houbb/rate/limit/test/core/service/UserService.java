@@ -7,9 +7,7 @@ package com.github.houbb.rate.limit.test.core.service;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.impl.LimitCountSlideWindow;
-import com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval;
-import com.github.houbb.rate.limit.core.core.impl.LimitFixedWindow;
+import com.github.houbb.rate.limit.core.core.impl.LimitSlideWindowQueue;
 import com.github.houbb.rate.limit.spring.annotation.Limit;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,7 @@ public class UserService {
         log.info("{}", Thread.currentThread().getName());
     }
 
-    @Limit(interval = 2, count = 5, limit = LimitCountSlideWindow.class)
+    @Limit(interval = 2, count = 5, limit = LimitSlideWindowQueue.class)
     public void limitCountSlide() {
         log.info("{}", Thread.currentThread().getName());
     }
