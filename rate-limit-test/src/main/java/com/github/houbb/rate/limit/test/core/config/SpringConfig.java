@@ -21,7 +21,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableLimit
 public class SpringConfig {
 
-    public static final String PATH = "com.github.houbb.rate.acquire.test.core.service";
+    public static final String PATH = "com.github.houbb.rate.limit.test.core.service";
 
 }
 
