@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-limit All rights reserved.
+ * rate-acquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core;
@@ -18,9 +18,15 @@ import org.apiguardian.api.API;
 public interface ILimit {
 
     /**
-     * 限制
-     * @since 0.0.1
+     * 尝试获取锁
+     * @since 0.0.5
      */
-    void limit() ;
+    void acquire() ;
+
+    /**
+     * 释放锁
+     * @since 0.0.5
+     */
+    void release();
 
 }

@@ -1,5 +1,5 @@
 /**
- * <p> project: rate-limit-package-info </p>
+ * <p> project: rate-acquire-package-info </p>
  * <p> create on 2020/6/20 20:33 </p>
  *
  * @author binbin.hou

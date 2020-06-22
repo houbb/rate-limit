@@ -82,15 +82,15 @@ public class LimitFrequencyFixedWindowTest {
 - 日志
 
 ```
-19:41:01.661 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:01.661 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
 19:41:01.667 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-0
-19:41:02.991 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:02.991 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
 19:41:02.991 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-1
-19:41:04.321 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:04.321 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
 19:41:04.321 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-2
-19:41:05.652 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:05.652 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
 19:41:05.652 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-3
-19:41:06.983 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow - [Limit] fixed frequency notify all
+19:41:06.983 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
 19:41:06.983 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-4
 ```
 

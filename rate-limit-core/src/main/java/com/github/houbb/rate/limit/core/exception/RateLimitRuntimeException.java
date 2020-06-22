@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-limit All rights reserved.
+ * rate-acquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.exception;
@@ -11,7 +11,7 @@ import org.apiguardian.api.API;
  * <p> 运行时异常 </p>
  *
  * <pre> Created: 2018/8/5 下午10:28  </pre>
- * <pre> Project: rate-limit  </pre>
+ * <pre> Project: rate-acquire  </pre>
  *
  * @author houbinbin
  * @version 0.0.1

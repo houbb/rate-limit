@@ -1,13 +1,12 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-limit All rights reserved.
+ * rate-acquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.ILimitContext;
 import com.github.houbb.rate.limit.core.util.ExecutorServiceUtil;
 import org.apiguardian.api.API;
@@ -24,13 +23,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 0.0.4
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitCountFixedWindows implements ILimit {
+public class LimitFixedWindow extends LimitAdaptor {
 
     /**
      * 日志
      * @since 0.0.4
      */
-    private static final Log LOG = LogFactory.getLog(LimitCountFixedWindows.class);
+    private static final Log LOG = LogFactory.getLog(LimitFixedWindow.class);
 
     /**
      * 上下文
@@ -58,7 +57,7 @@ public class LimitCountFixedWindows implements ILimit {
      * @param context 上下文
      * @since 0.0.4
      */
-    public LimitCountFixedWindows(ILimitContext context) {
+    public LimitFixedWindow(ILimitContext context) {
         this.context = context;
 
         // 定时将 count 清零。
@@ -75,7 +74,7 @@ public class LimitCountFixedWindows implements ILimit {
     }
 
     @Override
-    public synchronized void limit() {
+    public synchronized void acquire() {
 
         // 超过阈值，则进行等待
         if (counter.get() >= this.context.count()) {

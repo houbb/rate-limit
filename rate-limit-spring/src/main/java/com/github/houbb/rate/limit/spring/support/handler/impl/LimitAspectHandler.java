@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * <p> project: rate-limit-LimitHandler </p>
+ * <p> project: rate-acquire-LimitHandler </p>
  * <p> create on 2020/6/20 20:47 </p>
  *
  * @author binbin.hou
@@ -65,7 +65,7 @@ public class LimitAspectHandler implements ILimitAspectHandler {
         }
 
 
-        instance.limit();
+        instance.acquire();
     }
 
     /**

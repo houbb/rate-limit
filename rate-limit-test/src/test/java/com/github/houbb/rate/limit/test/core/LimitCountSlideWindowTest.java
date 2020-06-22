@@ -36,7 +36,7 @@ public class LimitCountSlideWindowTest {
         @Override
         public void run() {
             for(int i = 0; i < 10; i++) {
-                LIMIT.limit();
+                LIMIT.acquire();
                 log.info("{}-{}", Thread.currentThread().getName(), i);
             }
         }

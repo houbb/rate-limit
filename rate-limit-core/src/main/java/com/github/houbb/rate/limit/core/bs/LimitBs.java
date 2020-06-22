@@ -5,7 +5,7 @@ import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.ILimitContext;
 import com.github.houbb.rate.limit.core.core.impl.LimitContext;
-import com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow;
+import com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval;
 import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
 import com.github.houbb.rate.limit.core.support.ICurrentTime;
 import com.github.houbb.rate.limit.core.support.IIsFirstTime;
@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p> project: rate-limit-LimitBs </p>
+ * <p> project: rate-acquire-LimitBs </p>
  * <p> create on 2020/6/20 21:38 </p>
  *
  * @author binbin.hou
@@ -31,8 +31,25 @@ public final class LimitBs {
 
     private LimitBs(){}
 
+    /**
+     * 新建对象实例
+     * @return this
+     * @since 0.0.1
+     */
     public static LimitBs newInstance() {
         return new LimitBs();
+    }
+
+    /**
+     * 新建对象实例
+     * @param limitClass 限制类
+     * @return this
+     * @since 0.0.5
+     */
+    public static LimitBs newInstance(final Class<? extends ILimit> limitClass) {
+        LimitBs limitBs = new LimitBs();
+        limitBs.limit(limitClass);
+        return limitBs;
     }
 
     /**
@@ -84,7 +101,7 @@ public final class LimitBs {
      * 限制策略
      * @since 0.0.3
      */
-    private Class<? extends ILimit> limit = LimitFrequencyFixedWindow.class;
+    private Class<? extends ILimit> limit = LimitFixedInterval.class;
 
     private LimitBs currentTime(ICurrentTime currentTime) {
         this.currentTime = currentTime;
@@ -152,7 +169,7 @@ public final class LimitBs {
      * @since 0.0.3
      */
     public LimitBs limit(Class<? extends ILimit> limit) {
-        ArgUtil.notNull(limit, "limit");
+        ArgUtil.notNull(limit, "acquire");
 
         this.limit = limit;
         return this;

@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 这里可以提前初始化好所需要的 limiter 实现类。
  *
  * 但是好像没有必要。
- * <p> project: rate-limit-BeanLimit </p>
+ * <p> project: rate-acquire-BeanLimit </p>
  * <p> create on 2020/6/20 20:33 </p>
  *
  * https://blog.csdn.net/xiaojin21cen/article/details/83418470

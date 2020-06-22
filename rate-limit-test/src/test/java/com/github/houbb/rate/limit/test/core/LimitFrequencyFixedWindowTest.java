@@ -9,7 +9,7 @@ import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.rate.limit.core.bs.LimitBs;
 import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow;
+import com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval;
 
 /**
  * 全局-限制调用次数案例
@@ -26,14 +26,14 @@ public class LimitFrequencyFixedWindowTest {
      */
     private static final ILimit LIMIT = LimitBs.newInstance()
             .interval(1)
-            .limit(LimitFrequencyFixedWindow.class)
+            .limit(LimitFixedInterval.class)
             .build();
 
     static class LimitRunnable implements Runnable {
         @Override
         public void run() {
             for(int i = 0; i < 5; i++) {
-                LIMIT.limit();
+                LIMIT.acquire();
                 log.info("{}-{}", Thread.currentThread().getName(), i);
             }
         }

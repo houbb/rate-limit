@@ -1,13 +1,13 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-limit All rights reserved.
+ * rate-acquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.spring.annotation;
 
 
 import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitFrequencyFixedWindow;
+import com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval;
 import org.apiguardian.api.API;
 
 import java.lang.annotation.*;
@@ -55,6 +55,6 @@ public @interface Limit {
      * @return 限制策略
      * @since 0.0.3
      */
-    Class<? extends ILimit> limit() default LimitFrequencyFixedWindow.class;
+    Class<? extends ILimit> limit() default LimitFixedInterval.class;
 
 }

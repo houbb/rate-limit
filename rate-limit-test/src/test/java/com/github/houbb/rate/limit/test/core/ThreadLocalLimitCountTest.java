@@ -1,15 +1,15 @@
 ///*
 // * Copyright (c)  2018. houbinbin Inc.
-// * rate-limit All rights reserved.
+// * rate-acquire All rights reserved.
 // */
 //
-//package com.github.houbb.rate.limit.test.core;
+//package com.github.houbb.rate.acquire.test.core;
 //
 //import com.github.houbb.log.integration.core.Log;
 //import com.github.houbb.log.integration.core.LogFactory;
-//import com.github.houbb.rate.limit.core.bs.LimitBs;
-//import com.github.houbb.rate.limit.core.core.ILimit;
-//import com.github.houbb.rate.limit.core.core.impl.ThreadLocalLimitCount;
+//import com.github.houbb.rate.acquire.core.bs.LimitBs;
+//import com.github.houbb.rate.acquire.core.core.ILimit;
+//import com.github.houbb.rate.acquire.core.core.impl.ThreadLocalLimitCount;
 //import org.junit.Ignore;
 //
 ///**
@@ -27,7 +27,7 @@
 //    private static final ILimit LIMIT = LimitBs.newInstance()
 //            .interval(2)
 //            .count(5)
-//            .limit(ThreadLocalLimitCount.class)
+//            .acquire(ThreadLocalLimitCount.class)
 //            .build();
 //
 //    static class LimitRunnable implements Runnable {
@@ -35,7 +35,7 @@
 //        @Override
 //        public void run() {
 //            for(int i = 0; i < 10; i++) {
-//                LIMIT.limit();
+//                LIMIT.acquire();
 //                log.info("{}-{}", Thread.currentThread().getName(), i);
 //            }
 //        }

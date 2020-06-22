@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-limit All rights reserved.
+ * rate-acquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.test.core.config;
@@ -21,7 +21,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableLimit
 public class SpringConfig {
 
-    public static final String PATH = "com.github.houbb.rate.limit.test.core.service";
+    public static final String PATH = "com.github.houbb.rate.acquire.test.core.service";
 
 }
 

@@ -1,17 +1,15 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-limit All rights reserved.
+ * rate-acquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.ILimitContext;
 import com.github.houbb.rate.limit.core.support.ICurrentTime;
 import com.github.houbb.rate.limit.core.support.ILimitHandler;
-
 import org.apiguardian.api.API;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -23,8 +21,9 @@ import java.util.concurrent.BlockingQueue;
  * Created by bbhou on 2017/9/20.
  * @since 0.0.1
  */
+@Deprecated
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitCountSlideWindow implements ILimit {
+public class LimitCountSlideWindow extends LimitAdaptor {
 
     private static Log log = LogFactory.getLog(LimitCountSlideWindow.class);
 
@@ -51,7 +50,7 @@ public class LimitCountSlideWindow implements ILimit {
     }
 
     @Override
-    public synchronized void limit() {
+    public synchronized void acquire() {
         ICurrentTime currentTime = context.currentTime();
 
         long currentTimeInMills = currentTime.currentTimeInMills();
@@ -75,7 +74,7 @@ public class LimitCountSlideWindow implements ILimit {
                     limitHandler.handle(sleepInMills);
                     limitHandler.afterHandle();
                 } catch (Exception e) {
-                    log.error("GlobalLimitCount.limit() meet ex: "+e, e);
+                    log.error("GlobalLimitCount.acquire() meet ex: "+e, e);
                 }
             }
 

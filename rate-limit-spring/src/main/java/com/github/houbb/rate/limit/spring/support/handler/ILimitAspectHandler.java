@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * <p> project: rate-limit-LimitHandler </p>
+ * <p> project: rate-acquire-LimitHandler </p>
  * <p> create on 2020/6/20 20:47 </p>
  *
  * @author binbin.hou

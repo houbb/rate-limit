@@ -1,6 +1,5 @@
 package com.github.houbb.rate.limit.core.core.impl;
 
-import com.github.houbb.rate.limit.core.core.ILimit;
 import com.github.houbb.rate.limit.core.core.ILimitContext;
 import com.github.houbb.rate.limit.core.support.ICurrentTime;
 import com.github.houbb.rate.limit.core.support.IIsFirstTime;
@@ -10,7 +9,7 @@ import com.github.houbb.rate.limit.core.support.ITimeDiffer;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p> project: rate-limit-LimitContext </p>
+ * <p> project: rate-acquire-LimitContext </p>
  * <p> create on 2020/6/20 21:35 </p>
  *
  * @author binbin.hou
