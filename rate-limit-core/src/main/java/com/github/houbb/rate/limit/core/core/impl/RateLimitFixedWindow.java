@@ -7,7 +7,7 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import com.github.houbb.rate.limit.core.util.ExecutorServiceUtil;
 import org.apiguardian.api.API;
 
@@ -23,19 +23,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 0.0.5
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitFixedWindow extends LimitAdaptor {
+public class RateLimitFixedWindow extends RateLimitAdaptor {
 
     /**
      * 日志
      * @since 0.0.5
      */
-    private static final Log LOG = LogFactory.getLog(LimitFixedWindow.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitFixedWindow.class);
 
     /**
      * 上下文
      * @since 0.0.5
      */
-    private final ILimitContext context;
+    private final IRateLimitContext context;
 
     /**
      * 计数器
@@ -57,7 +57,7 @@ public class LimitFixedWindow extends LimitAdaptor {
      * @param context 上下文
      * @since 0.0.5
      */
-    public LimitFixedWindow(ILimitContext context) {
+    public RateLimitFixedWindow(IRateLimitContext context) {
         this.context = context;
 
         // 定时将 count 清零。

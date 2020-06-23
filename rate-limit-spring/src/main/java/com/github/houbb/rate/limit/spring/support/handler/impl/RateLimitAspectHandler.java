@@ -4,10 +4,10 @@ import com.github.houbb.heaven.constant.PunctuationConst;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.bs.LimitBs;
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.spring.annotation.Limit;
-import com.github.houbb.rate.limit.spring.support.handler.ILimitAspectHandler;
+import com.github.houbb.rate.limit.core.bs.RateLimitBs;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.spring.annotation.RateLimit;
+import com.github.houbb.rate.limit.spring.support.handler.IRateLimitAspectHandler;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -22,43 +22,43 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 0.0.3
  */
 @Component
-public class LimitAspectHandler implements ILimitAspectHandler {
+public class RateLimitAspectHandler implements IRateLimitAspectHandler {
 
     /**
      * 用来存放方法的限制器
      * Key=方法全名+注解名称
      * @since 0.0.3
      */
-    private static final Map<String, ILimit> LIMIT_HASH_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, IRateLimit> LIMIT_HASH_MAP = new ConcurrentHashMap<>();
 
     /**
      * 日志
      *
      * @since 0.0.3
      */
-    private static final Log LOG = LogFactory.getLog(LimitAspectHandler.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitAspectHandler.class);
 
     /**
      * 处理对应的信息
      *
      * @param method   方法
-     * @param limit    限制对象
+     * @param rateLimit    限制对象
      * @since 0.0.3
      */
     @Override
     public void handle(final Method method,
-                       final Limit limit) {
-        final Class<? extends ILimit> strategy = limit.limit();
+                       final RateLimit rateLimit) {
+        final Class<? extends IRateLimit> strategy = rateLimit.limitClass();
 
         String key = getMethodFullName(method) + ":" + strategy.getSimpleName();
-        ILimit instance = LIMIT_HASH_MAP.get(key);
+        IRateLimit instance = LIMIT_HASH_MAP.get(key);
 
         if(instance == null) {
-            instance = LimitBs.newInstance()
-                    .limit(strategy)
-                    .count(limit.count())
-                    .timeUnit(limit.timeUnit())
-                    .interval(limit.interval())
+            instance = RateLimitBs.newInstance()
+                    .limitClass(strategy)
+                    .count(rateLimit.count())
+                    .timeUnit(rateLimit.timeUnit())
+                    .interval(rateLimit.interval())
                     .build();
 
             LIMIT_HASH_MAP.put(key, instance);

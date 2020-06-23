@@ -9,7 +9,7 @@ import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.util.DateUtil;
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import com.github.houbb.rate.limit.core.support.ICurrentTime;
 import com.github.houbb.rate.limit.core.support.impl.CurrentTime;
 import org.apiguardian.api.API;
@@ -30,9 +30,9 @@ import java.util.concurrent.BlockingQueue;
  * @since 0.0.5
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitSlideWindowQueue extends LimitAdaptor {
+public class RateLimitSlideWindowQueue extends RateLimitAdaptor {
 
-    private static final Log LOG = LogFactory.getLog(LimitSlideWindowQueue.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitSlideWindowQueue.class);
 
     /**
      * 用于存放时间的队列
@@ -57,7 +57,7 @@ public class LimitSlideWindowQueue extends LimitAdaptor {
      * @param context 上下文
      * @since 0.0.3
      */
-    public LimitSlideWindowQueue(ILimitContext context) {
+    public RateLimitSlideWindowQueue(IRateLimitContext context) {
         this.timeBlockQueue = new ArrayBlockingQueue<>(context.count());
         this.intervalInMills = context.timeUnit().toMillis(context.interval());
     }

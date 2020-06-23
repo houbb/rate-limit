@@ -1,43 +1,34 @@
 package com.github.houbb.rate.limit.core.bs;
 
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
-import com.github.houbb.rate.limit.core.core.impl.LimitContext;
-import com.github.houbb.rate.limit.core.core.impl.LimitFixedWindow;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitContext;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitFixedWindow;
 import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
-import com.github.houbb.rate.limit.core.support.ICurrentTime;
-import com.github.houbb.rate.limit.core.support.IIsFirstTime;
-import com.github.houbb.rate.limit.core.support.ILimitHandler;
-import com.github.houbb.rate.limit.core.support.ITimeDiffer;
-import com.github.houbb.rate.limit.core.support.impl.CurrentTime;
-import com.github.houbb.rate.limit.core.support.impl.IsFirstTime;
-import com.github.houbb.rate.limit.core.support.impl.LimitHandler;
-import com.github.houbb.rate.limit.core.support.impl.TimeDiffer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p> project: rate-acquire-LimitBs </p>
+ * <p> project: rate-acquire-RateLimitBs </p>
  * <p> create on 2020/6/20 21:38 </p>
  *
  * @author binbin.hou
  * @since 0.0.3
  */
-public final class LimitBs {
+public final class RateLimitBs {
 
-    private LimitBs(){}
+    private RateLimitBs(){}
 
     /**
      * 新建对象实例
      * @return this
      * @since 0.0.1
      */
-    public static LimitBs newInstance() {
-        return new LimitBs();
+    public static RateLimitBs newInstance() {
+        return new RateLimitBs();
     }
 
     /**
@@ -46,10 +37,10 @@ public final class LimitBs {
      * @return this
      * @since 0.0.5
      */
-    public static LimitBs newInstance(final Class<? extends ILimit> limitClass) {
-        LimitBs limitBs = new LimitBs();
-        limitBs.limit(limitClass);
-        return limitBs;
+    public static RateLimitBs newInstance(final Class<? extends IRateLimit> limitClass) {
+        RateLimitBs rateLimitBs = new RateLimitBs();
+        rateLimitBs.limitClass(limitClass);
+        return rateLimitBs;
     }
 
     /**
@@ -77,7 +68,7 @@ public final class LimitBs {
      * 限制策略
      * @since 0.0.3
      */
-    private Class<? extends ILimit> limit = LimitFixedWindow.class;
+    private Class<? extends IRateLimit> limit = RateLimitFixedWindow.class;
 
     /**
      * 设置时间单位
@@ -85,7 +76,7 @@ public final class LimitBs {
      * @return this
      * @since 0.0.3
      */
-    public LimitBs timeUnit(TimeUnit timeUnit) {
+    public RateLimitBs timeUnit(TimeUnit timeUnit) {
         ArgUtil.notNull(timeUnit, "timeUnit");
 
         this.timeUnit = timeUnit;
@@ -98,7 +89,7 @@ public final class LimitBs {
      * @return this
      * @since 0.0.3
      */
-    public LimitBs interval(long interval) {
+    public RateLimitBs interval(long interval) {
         ArgUtil.gte("interval", interval, 1);
 
         this.interval = interval;
@@ -111,7 +102,7 @@ public final class LimitBs {
      * @return this
      * @since 0.0.3
      */
-    public LimitBs count(int count) {
+    public RateLimitBs count(int count) {
         ArgUtil.gte("count", count, 1);
 
         this.count = count;
@@ -124,7 +115,7 @@ public final class LimitBs {
      * @return this
      * @since 0.0.3
      */
-    public LimitBs limit(Class<? extends ILimit> limit) {
+    public RateLimitBs limitClass(Class<? extends IRateLimit> limit) {
         ArgUtil.notNull(limit, "acquire");
 
         this.limit = limit;
@@ -136,16 +127,16 @@ public final class LimitBs {
      * @return 实例
      * @since 0.0.3
      */
-    public ILimit build() {
+    public IRateLimit build() {
         try {
-            ILimitContext context = LimitContext.newInstance()
+            IRateLimitContext context = RateLimitContext.newInstance()
                     .timeUnit(timeUnit)
                     .count(count)
                     .interval(interval)
                     ;
 
-            Constructor constructor = this.limit.getConstructor(ILimitContext.class);
-            return (ILimit) constructor.newInstance(context);
+            Constructor constructor = this.limit.getConstructor(IRateLimitContext.class);
+            return (IRateLimit) constructor.newInstance(context);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             throw new RateLimitRuntimeException(e);
         }

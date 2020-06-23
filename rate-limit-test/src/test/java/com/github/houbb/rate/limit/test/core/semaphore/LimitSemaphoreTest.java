@@ -2,9 +2,9 @@ package com.github.houbb.rate.limit.test.core.semaphore;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.bs.LimitBs;
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitSemaphore;
+import com.github.houbb.rate.limit.core.bs.RateLimitBs;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitSemaphore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +16,7 @@ public class LimitSemaphoreTest {
 
     private static final Log LOG = LogFactory.getLog(LimitSemaphoreTest.class);
 
-    private static final ILimit LIMIT = LimitBs.newInstance(LimitSemaphore.class)
+    private static final IRateLimit LIMIT = RateLimitBs.newInstance(RateLimitSemaphore.class)
             .count(1)
             .build();
 

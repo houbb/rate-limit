@@ -6,8 +6,8 @@
 package com.github.houbb.rate.limit.spring.aop;
 
 import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
-import com.github.houbb.rate.limit.spring.annotation.Limit;
-import com.github.houbb.rate.limit.spring.support.handler.ILimitAspectHandler;
+import com.github.houbb.rate.limit.spring.annotation.RateLimit;
+import com.github.houbb.rate.limit.spring.support.handler.IRateLimitAspectHandler;
 import org.apiguardian.api.API;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -33,21 +33,21 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 @API(status = API.Status.MAINTAINED)
-public class LimitAspect {
+public class RateLimitAspect {
 
     @Autowired
-    private ILimitAspectHandler limitHandler;
+    private IRateLimitAspectHandler limitHandler;
 
-    @Pointcut("@annotation(com.github.houbb.rate.limit.spring.annotation.Limit)")
+    @Pointcut("@annotation(com.github.houbb.rate.limit.spring.annotation.RateLimit)")
     public void myPointcut() {
     }
 
-    @Around("myPointcut() && @annotation(limit)")
-    public Object around(ProceedingJoinPoint point, Limit limit) throws Throwable {
+    @Around("myPointcut() && @annotation(rateLimit)")
+    public Object around(ProceedingJoinPoint point, RateLimit rateLimit) throws Throwable {
         Method method = getCurrentMethod(point);
 
         // 核心处理方法
-        limitHandler.handle(method, limit);
+        limitHandler.handle(method, rateLimit);
 
         return point.proceed();
     }

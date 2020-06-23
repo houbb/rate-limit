@@ -7,13 +7,8 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
-import com.github.houbb.rate.limit.core.util.ExecutorServiceUtil;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import org.apiguardian.api.API;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 令牌桶算法
@@ -23,9 +18,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * @since 0.0.6
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitTokenBucket extends LimitAdaptor {
+public class RateLimitTokenBucket extends RateLimitAdaptor {
 
-    private static final Log LOG = LogFactory.getLog(LimitTokenBucket.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitTokenBucket.class);
 
     /**
      * 令牌的发放速率
@@ -65,7 +60,7 @@ public class LimitTokenBucket extends LimitAdaptor {
      * @param context 上下文
      * @since 0.0.4
      */
-    public LimitTokenBucket(final ILimitContext context) {
+    public RateLimitTokenBucket(final IRateLimitContext context) {
         // 暂不考虑特殊输入，比如 1s 令牌少于1 的场景
         long intervalSeconds = context.timeUnit().toSeconds(context.interval());
         this.rate = context.count() / intervalSeconds;

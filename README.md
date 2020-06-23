@@ -1,13 +1,13 @@
 # 项目简介
 
-[rate-limit](https://github.com/houbb/rate-limit) 是一个为 java 设计的限流工具。
+[rate-rateLimit](https://github.com/houbb/rate-rateLimit) 是一个为 java 设计的限流工具。
 
 目的是为了深入学习和使用限流，后续将会持续迭代。
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/rate-limit/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/rate-limit)
-[![Build Status](https://www.travis-ci.org/houbb/rate-limit.svg?branch=master)](https://www.travis-ci.org/houbb/rate-limit?branch=master)
-[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/rate-limit/blob/master/LICENSE.txt)
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/rate-limit)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/rate-rateLimit/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/rate-rateLimit)
+[![Build Status](https://www.travis-ci.org/houbb/rate-rateLimit.svg?branch=master)](https://www.travis-ci.org/houbb/rate-rateLimit?branch=master)
+[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/rate-rateLimit/blob/master/LICENSE.txt)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/rate-rateLimit)
 
 ## 特性
 
@@ -34,7 +34,7 @@
 ```xml
 <dependency>
     <groupId>com.github.houbb</groupId>
-    <artifactId>rate-limit-core</artifactId>
+    <artifactId>rate-rateLimit-core</artifactId>
     <version>${最新版本}</version>
 </dependency>
 ```
@@ -56,14 +56,14 @@ public class LimitFrequencyFixedWindowTest {
      */
     private static final ILimit LIMIT = LimitBs.newInstance()
             .interval(1)
-            .limit(LimitFrequencyFixedWindow.class)
+            .rateLimit(LimitFrequencyFixedWindow.class)
             .build();
 
     static class LimitRunnable implements Runnable {
         @Override
         public void run() {
             for(int i = 0; i < 5; i++) {
-                LIMIT.limit();
+                LIMIT.rateLimit();
                 log.info("{}-{}", Thread.currentThread().getName(), i);
             }
         }
@@ -80,16 +80,16 @@ public class LimitFrequencyFixedWindowTest {
 - 日志
 
 ```
-19:41:01.661 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:01.667 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-0
-19:41:02.991 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:02.991 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-1
-19:41:04.321 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:04.321 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-2
-19:41:05.652 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:05.652 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-3
-19:41:06.983 [Thread-1] INFO  com.github.houbb.rate.limit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:06.983 [Thread-2] INFO  com.github.houbb.rate.limit.test.core.LimitFrequencyFixedWindowTest - Thread-2-4
+19:41:01.661 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
+19:41:01.667 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-0
+19:41:02.991 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
+19:41:02.991 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-1
+19:41:04.321 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
+19:41:04.321 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-2
+19:41:05.652 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
+19:41:05.652 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-3
+19:41:06.983 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
+19:41:06.983 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-4
 ```
 
 # 拓展阅读

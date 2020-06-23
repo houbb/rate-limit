@@ -6,8 +6,8 @@
 package com.github.houbb.rate.limit.spring.annotation;
 
 
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitFixedWindow;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitFixedWindow;
 import org.apiguardian.api.API;
 
 import java.lang.annotation.*;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Target({ElementType.METHOD})
 @Inherited
 @API(status = API.Status.MAINTAINED)
-public @interface Limit {
+public @interface RateLimit {
 
     /**
      * 时间单位, 默认为秒
@@ -55,6 +55,6 @@ public @interface Limit {
      * @return 限制策略
      * @since 0.0.3
      */
-    Class<? extends ILimit> limit() default LimitFixedWindow.class;
+    Class<? extends IRateLimit> limitClass() default RateLimitFixedWindow.class;
 
 }

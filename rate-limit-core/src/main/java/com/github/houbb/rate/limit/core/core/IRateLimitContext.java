@@ -5,11 +5,6 @@
 
 package com.github.houbb.rate.limit.core.core;
 
-import com.github.houbb.rate.limit.core.support.ICurrentTime;
-import com.github.houbb.rate.limit.core.support.IIsFirstTime;
-import com.github.houbb.rate.limit.core.support.ILimitHandler;
-import com.github.houbb.rate.limit.core.support.ITimeDiffer;
-
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author bbhou
  * @since 0.0.3
  */
-public interface ILimitContext {
+public interface IRateLimitContext {
 
     /**
      * 单位

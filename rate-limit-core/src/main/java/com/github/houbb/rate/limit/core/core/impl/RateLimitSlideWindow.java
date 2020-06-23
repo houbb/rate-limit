@@ -7,7 +7,7 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import com.github.houbb.rate.limit.core.util.ExecutorServiceUtil;
 import org.apiguardian.api.API;
 
@@ -25,9 +25,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * @since 0.0.5
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitSlideWindow extends LimitAdaptor {
+public class RateLimitSlideWindow extends RateLimitAdaptor {
 
-    private static final Log LOG = LogFactory.getLog(LimitSlideWindow.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitSlideWindow.class);
 
     /**
      * 默认切分为10个窗口
@@ -47,7 +47,7 @@ public class LimitSlideWindow extends LimitAdaptor {
      * 最大的限制数量
      * @since 0.0.5
      */
-    private final ILimitContext limitContext;
+    private final IRateLimitContext limitContext;
 
     /**
      * 阻塞执行的阻断器
@@ -77,7 +77,7 @@ public class LimitSlideWindow extends LimitAdaptor {
      * @param context 上下文
      * @since 0.0.4
      */
-    public LimitSlideWindow(final ILimitContext context) {
+    public RateLimitSlideWindow(final IRateLimitContext context) {
         this.limitContext = context;
         this.array = new long[WINDOW_NUM];
 

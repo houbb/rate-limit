@@ -1,21 +1,17 @@
 package com.github.houbb.rate.limit.core.core.impl;
 
-import com.github.houbb.rate.limit.core.core.ILimitContext;
-import com.github.houbb.rate.limit.core.support.ICurrentTime;
-import com.github.houbb.rate.limit.core.support.IIsFirstTime;
-import com.github.houbb.rate.limit.core.support.ILimitHandler;
-import com.github.houbb.rate.limit.core.support.ITimeDiffer;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p> project: rate-acquire-LimitContext </p>
+ * <p> project: rate-acquire-RateLimitContext </p>
  * <p> create on 2020/6/20 21:35 </p>
  *
  * @author binbin.hou
  * @since 0.0.3
  */
-public class LimitContext implements ILimitContext {
+public class RateLimitContext implements IRateLimitContext {
 
     /**
      * 单位
@@ -35,8 +31,8 @@ public class LimitContext implements ILimitContext {
      */
     private int count;
 
-    public static LimitContext newInstance() {
-        return new LimitContext();
+    public static RateLimitContext newInstance() {
+        return new RateLimitContext();
     }
 
     @Override
@@ -44,7 +40,7 @@ public class LimitContext implements ILimitContext {
         return timeUnit;
     }
 
-    public LimitContext timeUnit(TimeUnit timeUnit) {
+    public RateLimitContext timeUnit(TimeUnit timeUnit) {
         this.timeUnit = timeUnit;
         return this;
     }
@@ -54,7 +50,7 @@ public class LimitContext implements ILimitContext {
         return interval;
     }
 
-    public LimitContext interval(long interval) {
+    public RateLimitContext interval(long interval) {
         this.interval = interval;
         return this;
     }
@@ -64,7 +60,7 @@ public class LimitContext implements ILimitContext {
         return count;
     }
 
-    public LimitContext count(int count) {
+    public RateLimitContext count(int count) {
         this.count = count;
         return this;
     }

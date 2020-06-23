@@ -12,5 +12,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = "com.github.houbb.rate.limit.spring")
-public class LimitConfig {
+public class RateLimitConfig {
 }

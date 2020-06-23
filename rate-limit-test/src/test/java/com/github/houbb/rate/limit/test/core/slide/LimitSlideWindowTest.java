@@ -2,9 +2,9 @@ package com.github.houbb.rate.limit.test.core.slide;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.bs.LimitBs;
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitSlideWindow;
+import com.github.houbb.rate.limit.core.bs.RateLimitBs;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitSlideWindow;
 import com.github.houbb.rate.limit.test.core.LimitCountSlideWindowTest;
 
 /**
@@ -18,10 +18,10 @@ public class LimitSlideWindowTest {
     /**
      * @since 0.0.5
      */
-    private static final ILimit LIMIT = LimitBs.newInstance()
+    private static final IRateLimit LIMIT = RateLimitBs.newInstance()
             .interval(2)
             .count(2)
-            .limit(LimitSlideWindow.class)
+            .limitClass(RateLimitSlideWindow.class)
             .build();
 
     static class LimitRunnable implements Runnable {

@@ -1,10 +1,8 @@
 package com.github.houbb.rate.limit.spring.support.handler;
 
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.spring.annotation.Limit;
+import com.github.houbb.rate.limit.spring.annotation.RateLimit;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * <p> project: rate-acquire-LimitHandler </p>
@@ -13,15 +11,16 @@ import java.util.Map;
  * @author binbin.hou
  * @since 0.0.3
  */
-public interface ILimitAspectHandler {
+public interface IRateLimitAspectHandler {
 
     /**
      * 处理对应的信息
-     * @param method 方法
-     * @param limit 限制对象
+     *
+     * @param method    方法
+     * @param rateLimit 限制对象
      * @since 0.0.3
      */
     void handle(final Method method,
-                final Limit limit);
+                final RateLimit rateLimit);
 
 }

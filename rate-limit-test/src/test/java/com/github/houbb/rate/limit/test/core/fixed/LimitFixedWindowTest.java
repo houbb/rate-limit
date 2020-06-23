@@ -7,9 +7,9 @@ package com.github.houbb.rate.limit.test.core.fixed;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.bs.LimitBs;
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitFixedWindow;
+import com.github.houbb.rate.limit.core.bs.RateLimitBs;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitFixedWindow;
 
 /**
  * 限制调用-固定时间窗口案例
@@ -24,10 +24,10 @@ public class LimitFixedWindowTest {
      * 1S 内最多运行 1 次
      * @since 0.0.5
      */
-    private static final ILimit LIMIT = LimitBs.newInstance()
+    private static final IRateLimit LIMIT = RateLimitBs.newInstance()
             .interval(1)
             .count(1)
-            .limit(LimitFixedWindow.class)
+            .limitClass(RateLimitFixedWindow.class)
             .build();
 
     static class LimitRunnable implements Runnable {

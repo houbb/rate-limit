@@ -7,7 +7,7 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import org.apiguardian.api.API;
 
 /**
@@ -18,9 +18,9 @@ import org.apiguardian.api.API;
  * @since 0.0.7
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitLeakyBucket extends LimitAdaptor {
+public class RateLimitLeakyBucket extends RateLimitAdaptor {
 
-    private static final Log LOG = LogFactory.getLog(LimitLeakyBucket.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitLeakyBucket.class);
 
     /**
      * 令牌的发放速率
@@ -60,7 +60,7 @@ public class LimitLeakyBucket extends LimitAdaptor {
      * @param context 上下文
      * @since 0.0.4
      */
-    public LimitLeakyBucket(final ILimitContext context) {
+    public RateLimitLeakyBucket(final IRateLimitContext context) {
         // 暂不考虑特殊输入，比如 1s 令牌少于1 的场景
         long intervalSeconds = context.timeUnit().toSeconds(context.interval());
         this.rate = context.count() / intervalSeconds;

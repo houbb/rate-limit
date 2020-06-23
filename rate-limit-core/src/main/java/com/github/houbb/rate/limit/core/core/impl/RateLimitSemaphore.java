@@ -7,7 +7,7 @@ package com.github.houbb.rate.limit.core.core.impl;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.ILimitContext;
+import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import org.apiguardian.api.API;
 
 import java.util.concurrent.Semaphore;
@@ -21,14 +21,14 @@ import java.util.concurrent.Semaphore;
  * @since 0.0.5
  */
 @API(status = API.Status.EXPERIMENTAL)
-public class LimitSemaphore extends LimitAdaptor {
+public class RateLimitSemaphore extends RateLimitAdaptor {
 
     /**
      * 日志
      *
      * @since 0.0.5
      */
-    private static final Log LOG = LogFactory.getLog(LimitSemaphore.class);
+    private static final Log LOG = LogFactory.getLog(RateLimitSemaphore.class);
 
     /**
      * 信号量
@@ -43,7 +43,7 @@ public class LimitSemaphore extends LimitAdaptor {
      * @param context 上下文
      * @since 0.0.5
      */
-    public LimitSemaphore(final ILimitContext context) {
+    public RateLimitSemaphore(final IRateLimitContext context) {
         this.semaphore = new Semaphore(context.count());
     }
 

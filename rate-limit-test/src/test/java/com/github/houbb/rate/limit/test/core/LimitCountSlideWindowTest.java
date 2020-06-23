@@ -7,9 +7,9 @@ package com.github.houbb.rate.limit.test.core;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.bs.LimitBs;
-import com.github.houbb.rate.limit.core.core.ILimit;
-import com.github.houbb.rate.limit.core.core.impl.LimitSlideWindowQueue;
+import com.github.houbb.rate.limit.core.bs.RateLimitBs;
+import com.github.houbb.rate.limit.core.core.IRateLimit;
+import com.github.houbb.rate.limit.core.core.impl.RateLimitSlideWindowQueue;
 import org.junit.Ignore;
 
 /**
@@ -25,10 +25,10 @@ public class LimitCountSlideWindowTest {
      * 2S 内最多运行 5 次
      * @since 0.0.5
      */
-    private static final ILimit LIMIT = LimitBs.newInstance()
+    private static final IRateLimit LIMIT = RateLimitBs.newInstance()
             .interval(2)
             .count(5)
-            .limit(LimitSlideWindowQueue.class)
+            .limitClass(RateLimitSlideWindowQueue.class)
             .build();
 
     static class LimitRunnable implements Runnable {
