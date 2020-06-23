@@ -29,7 +29,7 @@ public class LimitSlideWindowTest {
         @Override
         public void run() {
             for(int i = 0; i < 6; i++) {
-                LIMIT.acquire();
+                LIMIT.tryAcquire();
                 log.info("{}-{}", Thread.currentThread().getName(), i);
             }
         }

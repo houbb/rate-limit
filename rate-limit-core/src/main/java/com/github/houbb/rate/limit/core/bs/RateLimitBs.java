@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p> project: rate-acquire-RateLimitBs </p>
+ * <p> project: rate-tryAcquire-RateLimitBs </p>
  * <p> create on 2020/6/20 21:38 </p>
  *
  * @author binbin.hou
@@ -116,7 +116,7 @@ public final class RateLimitBs {
      * @since 0.0.3
      */
     public RateLimitBs limitClass(Class<? extends IRateLimit> limit) {
-        ArgUtil.notNull(limit, "acquire");
+        ArgUtil.notNull(limit, "tryAcquire");
 
         this.limit = limit;
         return this;

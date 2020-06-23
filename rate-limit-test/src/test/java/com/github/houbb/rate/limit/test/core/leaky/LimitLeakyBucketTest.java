@@ -33,7 +33,7 @@ public class LimitLeakyBucketTest {
         @Override
         public void run() {
             for(int i = 0; i < 6; i++) {
-                while (!LIMIT.acquire()) {
+                while (!LIMIT.tryAcquire()) {
                     // 等待令牌
                     DateUtil.sleep(100);
                 }

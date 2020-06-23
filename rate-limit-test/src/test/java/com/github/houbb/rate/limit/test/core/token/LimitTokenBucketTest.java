@@ -32,7 +32,7 @@ public class LimitTokenBucketTest {
         @Override
         public void run() {
             for(int i = 0; i < 6; i++) {
-                while (!LIMIT.acquire()) {
+                while (!LIMIT.tryAcquire()) {
                     // 等待令牌
                     TimeUtil.sleep(100);
                 }

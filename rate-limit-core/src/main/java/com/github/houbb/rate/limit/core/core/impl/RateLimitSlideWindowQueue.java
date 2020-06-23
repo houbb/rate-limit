@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
@@ -63,7 +63,7 @@ public class RateLimitSlideWindowQueue extends RateLimitAdaptor {
     }
 
     @Override
-    public synchronized boolean acquire() {
+    public synchronized boolean tryAcquire() {
         long currentTimeInMills = currentTime.currentTimeInMills();
 
         //1. 将时间放入队列中 如果放得下，直接可以执行。反之，需要等待
@@ -85,7 +85,7 @@ public class RateLimitSlideWindowQueue extends RateLimitAdaptor {
 
             currentTimeInMills = currentTime.currentTimeInMills();
             boolean addResult = timeBlockQueue.offer(currentTimeInMills);
-            LOG.debug("[Limit] acquire add result: " + addResult);
+            LOG.debug("[Limit] tryAcquire add result: " + addResult);
         }
 
         return true;

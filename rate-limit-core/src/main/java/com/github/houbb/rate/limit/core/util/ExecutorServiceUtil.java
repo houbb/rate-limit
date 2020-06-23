@@ -7,7 +7,7 @@ import com.github.houbb.heaven.util.util.ArrayUtil;
 import java.util.concurrent.*;
 
 /**
- * <p> project: rate-acquire-ThreadUtil </p>
+ * <p> project: rate-tryAcquire-ThreadUtil </p>
  * <p> create on 2020/6/21 12:08 </p>
  *
  * @author binbin.hou

@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.spring.aop;
@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
  * <p> 切面实现 </p>
  *
  * <pre> Created: 2018/8/5 下午9:37  </pre>
- * <pre> Project: rate-acquire  </pre>
+ * <pre> Project: rate-tryAcquire  </pre>
  *
  * @author houbinbin
  * @version 0.0.1

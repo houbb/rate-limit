@@ -5,7 +5,7 @@
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
     <modules>
         <module>rate-limit-core</module>
         <module>rate-limit-spring</module>
@@ -38,6 +38,7 @@
         <!--============================== OTHER ==============================-->
         <junit.version>4.12</junit.version>
         <apiguardian-api.version>1.0.0</apiguardian-api.version>
+        <guava.version>20.0</guava.version>
 
         <!--spring-->
         <spring.version>4.3.24.RELEASE</spring.version>
@@ -76,6 +77,13 @@
 
 
             <!--============================== OTHER ==============================-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+                <optional>true</optional>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

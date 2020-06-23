@@ -5,7 +5,7 @@ import com.github.houbb.rate.limit.core.core.IRateLimitContext;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p> project: rate-acquire-RateLimitContext </p>
+ * <p> project: rate-tryAcquire-RateLimitContext </p>
  * <p> create on 2020/6/20 21:35 </p>
  *
  * @author binbin.hou

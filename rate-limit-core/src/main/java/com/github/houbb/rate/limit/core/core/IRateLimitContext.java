@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core;

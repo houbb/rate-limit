@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
@@ -74,7 +74,7 @@ public class RateLimitFixedWindow extends RateLimitAdaptor {
     }
 
     @Override
-    public synchronized boolean acquire() {
+    public synchronized boolean tryAcquire() {
 
         // 超过阈值，则进行等待
         if (counter.get() >= this.context.count()) {

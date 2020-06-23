@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
@@ -48,11 +48,11 @@ public class RateLimitSemaphore extends RateLimitAdaptor {
     }
 
     @Override
-    public synchronized boolean acquire() {
+    public synchronized boolean tryAcquire() {
         try {
-            LOG.debug("[Limit] start acquire");
+            LOG.debug("[Limit] start tryAcquire");
             this.semaphore.acquire(1);
-            LOG.debug("[Limit] end acquire");
+            LOG.debug("[Limit] end tryAcquire");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             LOG.error("[Limit] semaphore meet ex: ", e);
@@ -62,7 +62,10 @@ public class RateLimitSemaphore extends RateLimitAdaptor {
         return true;
     }
 
-    @Override
+    /**
+     * 释放锁
+     * @since 0.0.5
+     */
     public void release() {
         LOG.debug("[Limit] start release");
         this.semaphore.release(1);

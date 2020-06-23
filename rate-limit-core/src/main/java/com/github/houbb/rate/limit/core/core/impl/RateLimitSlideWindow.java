@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
@@ -118,7 +118,7 @@ public class RateLimitSlideWindow extends RateLimitAdaptor {
      * @since 0.0.5
      */
     @Override
-    public synchronized boolean acquire() {
+    public synchronized boolean tryAcquire() {
         long currentSum = counter.get();
         if(currentSum > limitContext.count()) {
             // 循环等待

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (c)  2018. houbinbin Inc.
-  ~ rate-acquire All rights reserved.
+  ~ rate-tryAcquire All rights reserved.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -10,7 +10,7 @@
     <parent>
         <artifactId>rate-limit</artifactId>
         <groupId>com.github.houbb</groupId>
-        <version>0.0.8</version>
+        <version>0.0.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -46,6 +46,12 @@
             <artifactId>log4j-core</artifactId>
             <version>2.6.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c)  2018. houbinbin Inc.
- * rate-acquire All rights reserved.
+ * rate-tryAcquire All rights reserved.
  */
 
 package com.github.houbb.rate.limit.core.core.impl;
@@ -79,7 +79,7 @@ public class RateLimitTokenBucket extends RateLimitAdaptor {
      * @since 0.0.5
      */
     @Override
-    public synchronized boolean acquire() {
+    public synchronized boolean tryAcquire() {
 
         if (tokenNum < 1) {
             // 加入令牌

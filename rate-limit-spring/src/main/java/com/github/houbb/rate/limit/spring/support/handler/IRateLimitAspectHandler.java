@@ -5,7 +5,7 @@ import com.github.houbb.rate.limit.spring.annotation.RateLimit;
 import java.lang.reflect.Method;
 
 /**
- * <p> project: rate-acquire-LimitHandler </p>
+ * <p> project: rate-tryAcquire-LimitHandler </p>
  * <p> create on 2020/6/20 20:47 </p>
  *
  * @author binbin.hou
