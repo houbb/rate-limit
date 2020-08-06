@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c)  2018. houbinbin Inc.
-  ~ rate-tryAcquire All rights reserved.
-  -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -14,20 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rate-limit-spring</artifactId>
-    <description>spring 整合实现</description>
+    <artifactId>rate-limit-test2</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>rate-limit-core</artifactId>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>test-spring</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.github.houbb</groupId>
-            <artifactId>aop-spring</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>rate-limit-springboot-starter</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>

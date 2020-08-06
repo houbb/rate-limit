@@ -30,10 +30,6 @@
 
         <!--============================== OTHER ==============================-->
         <dependency>
-            <groupId>org.apiguardian</groupId>
-            <artifactId>apiguardian-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>

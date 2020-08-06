@@ -10,6 +10,8 @@
         <module>rate-limit-core</module>
         <module>rate-limit-spring</module>
         <module>rate-limit-test</module>
+        <module>rate-limit-springboot-starter</module>
+        <module>rate-limit-test2</module>
     </modules>
 
     <properties>
@@ -33,16 +35,14 @@
 
         <!--============================== INTER ==============================-->
         <log-integration.version>1.1.8</log-integration.version>
-        <heaven.version>0.1.107</heaven.version>
+        <heaven.version>0.1.112</heaven.version>
+        <aop.version>0.0.2</aop.version>
+        <test.version>0.0.1</test.version>
 
         <!--============================== OTHER ==============================-->
-        <junit.version>4.12</junit.version>
-        <apiguardian-api.version>1.0.0</apiguardian-api.version>
         <guava.version>20.0</guava.version>
 
-        <!--spring-->
-        <spring.version>4.3.24.RELEASE</spring.version>
-        <aspectj.version>1.8.5</aspectj.version>
+        <spring-boot.version>1.5.22.RELEASE</spring-boot.version>
     </properties>
 
 
@@ -62,6 +62,11 @@
                 <artifactId>rate-limit-spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>rate-limit-springboot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--============================== INTER ==============================-->
             <dependency>
@@ -75,6 +80,23 @@
                 <version>${heaven.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>test-spring</artifactId>
+                <version>${test.version}</version>
+            </dependency>
+
+            <!-- AOP -->
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>aop-core</artifactId>
+                <version>${aop.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>aop-spring</artifactId>
+                <version>${aop.version}</version>
+            </dependency>
 
             <!--============================== OTHER ==============================-->
             <dependency>
@@ -83,53 +105,10 @@
                 <version>${guava.version}</version>
                 <optional>true</optional>
             </dependency>
-
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <optional>true</optional>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apiguardian</groupId>
-                <artifactId>apiguardian-api</artifactId>
-                <version>${apiguardian-api.version}</version>
-                <optional>true</optional>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-
-            <!-- AOP -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj.version}</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
 
         </dependencies>

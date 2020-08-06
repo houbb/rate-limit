@@ -28,12 +28,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>test-spring</artifactId>
         </dependency>
 
         <dependency>
