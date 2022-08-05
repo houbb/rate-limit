@@ -34,14 +34,6 @@ public class SpringConfigTest {
     @Autowired
     private UserService userService;
 
-    @Test
-    public void limitCountTest() throws InterruptedException {
-        for(int i = 0; i < 4; i++) {
-            TimeUnit.SECONDS.sleep(1);
-            userService.limitCount();
-        }
-    }
-
     @Test(expected = RateLimitRuntimeException.class)
     public void limitCountErrorTest() {
         for(int i = 0; i < 3; i++) {

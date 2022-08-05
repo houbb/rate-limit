@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author binbin.hou
  * @since 0.0.10
@@ -21,14 +19,6 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
-
-    @Test
-    public void limitCountTest() throws InterruptedException {
-        for(int i = 0; i < 3; i++) {
-            TimeUnit.SECONDS.sleep(1);
-            userService.limitCount();
-        }
-    }
 
     @Test(expected = RateLimitRuntimeException.class)
     public void limitCountErrorTest() {
