@@ -16,11 +16,9 @@ import org.springframework.context.annotation.Configuration;
  * @since 0.0.1
  */
 @Configuration
-@ComponentScan(SpringConfig.PATH)
+@ComponentScan("com.github.houbb.rate.limit.test.core")
 @EnableRateLimit
 public class SpringConfig {
-
-    public static final String PATH = "com.github.houbb.rate.limit.test.core";
 
 }
 

@@ -1,21 +1,25 @@
 # 项目简介
 
-[rate-rateLimit](https://github.com/houbb/rate-rateLimit) 是一个为 java 设计的限流工具。
+[rate-limit](https://github.com/houbb/rate-limit) 是一个为 java 设计的渐进式限流工具。
 
 目的是为了深入学习和使用限流，后续将会持续迭代。
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/rate-rateLimit/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/rate-rateLimit)
-[![Build Status](https://www.travis-ci.org/houbb/rate-rateLimit.svg?branch=master)](https://www.travis-ci.org/houbb/rate-rateLimit?branch=master)
-[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/rate-rateLimit/blob/master/LICENSE.txt)
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/rate-rateLimit)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/rate-limit/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/rate-limit)
+[![Build Status](https://www.travis-ci.org/houbb/rate-limit.svg?branch=master)](https://www.travis-ci.org/houbb/rate-limit?branch=master)
+[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/rate-limit/blob/master/LICENSE.txt)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/rate-limit)
 
 ## 特性
 
-- 支持限制访问频率
+- 渐进式实现
 
-- 支持多种限流策略
+- 支持独立于 spring 使用
 
-- 支持 spring 注解的使用方式
+- 支持整合 spring
+
+- 支持整合 spring-boot
+
+- 内置多种限流策略
 
 # 变更日志
 
@@ -34,75 +38,194 @@
 ```xml
 <dependency>
     <groupId>com.github.houbb</groupId>
-    <artifactId>rate-rateLimit-core</artifactId>
-    <version>${最新版本}</version>
+    <artifactId>rate-limit-core</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
-## 演示代码
+## 入门例子
 
-- LimitFrequencyFixedWindowTest.java
+### 方法定义
 
-固定时间窗口实现的频率限制：
+`@RateLimit` 限流注解放在方法上，指定对应的限制频率。
+
+| 属性 | 说明 | 默认值 |
+|:---|:---|:---|
+| value | 方法访问一次消耗的令牌数 | `1` |
+| timeUnit | 时间单位 | `TimeUnit.SECONDS` |
+| interval | 时间间隔 | `60` |
+| count | 可调用次数 | `1000` |
+
+默认为 60S 内，可以调用 1000 次。
 
 ```java
-public class LimitFrequencyFixedWindowTest {
+public class UserService {
 
-    private static final Log log = LogFactory.getLog(LimitFrequencyFixedWindowTest.class);
-
-    /**
-     * 2S 内最多运行 5 次
-     * @since 0.0.5
-     */
-    private static final ILimit LIMIT = LimitBs.newInstance()
-            .interval(1)
-            .rateLimit(LimitFrequencyFixedWindow.class)
-            .build();
-
-    static class LimitRunnable implements Runnable {
-        @Override
-        public void run() {
-            for(int i = 0; i < 5; i++) {
-                LIMIT.rateLimit();
-                log.info("{}-{}", Thread.currentThread().getName(), i);
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        new Thread(new LimitRunnable()).start();
+    @RateLimit(interval = 2, count = 5)
+    public void limitCount() {
+        log.info("{}", Thread.currentThread().getName());
     }
 
 }
 ```
 
+这个例子中我们 2S 内最多调用 5 次。
 
-- 日志
+### 代码测试
 
+`RateLimitProxy.getProxy(xxx)` 通过字节码获取方法对应的方法代理。
+
+```java
+@Test(expected = RateLimitRuntimeException.class)
+public void limitCountErrorTest() {
+    UserService userService = RateLimitProxy.getProxy(new UserService());
+    for(int i = 0; i < 3; i++) {
+        userService.limitCount();
+    }
+}
 ```
-19:41:01.661 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:01.667 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-0
-19:41:02.991 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:02.991 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-1
-19:41:04.321 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:04.321 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-2
-19:41:05.652 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:05.652 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-3
-19:41:06.983 [Thread-1] INFO  com.github.houbb.rate.rateLimit.core.core.impl.LimitFixedInterval - [Limit] fixed frequency notify all
-19:41:06.983 [Thread-2] INFO  com.github.houbb.rate.rateLimit.test.core.LimitFrequencyFixedWindowTest - Thread-2-4
+
+当调用超出限制时，默认抛出 `RateLimitRuntimeException` 异常。
+
+这里默认使用的是令牌桶算法，所以会出现异常。
+
+### 指定引导类
+
+```java
+RateLimitProxy.getProxy(new UserService());
 ```
 
-# 拓展阅读
+等价于 
 
-[spring 整合使用](doc/user/02-spring.md)
+```java
+RateLimitProxy.getProxy(new UserService(), RateLimitBs.newInstance());
+```
+
+下面我们来一起看一下 RateLimitBs 引导类。
+
+## 引导类
+
+`RateLimitBs` 作为引导类，便于用户自定义配置。
+
+| 方法 | 说明 | 默认值 |
+|:---|:---|:---|
+| rateLimit | 限流策略 | `RateLimits.tokenBucket()` 令牌桶算法 |
+| timer | 时间策略 | `Timers.system()` 系统时间 |
+| cacheService | 缓存策略 | `CommonCacheServiceMap` 基于本地 map 的缓存策略 |
+| configService | 限制配置策略 | `RateLimitConfigService` 默认基于方法上的注解 |
+| tokenService | 身份标识策略 | `RateLimitTokenService` 默认基于 IP |
+| methodService | 方法标识策略 | `RateLimitMethodService` 默认基于方法名+参数类型 |
+| rejectListener | 拒绝策略 | `RateLimitRejectListenerException` 限流时抛出异常 |
+
+其中 rateLimit 内置 `RateLimits` 工具中的策略如下：
+
+| 方法 | 说明 |
+|:---|:---|
+| fixedWindow() | 固定窗口 |
+| slideWindow(int windowNum) | 滑动窗口，可指定窗口大小 |
+| slideWindow() | 滑动窗口，默认为 10 |
+| slideWindowQueue() | 滑动窗口，基于队列的实现 |
+| leakyBucket() | 漏桶算法 |
+| tokenBucket() | 令牌桶算法 |
+
+### 配置建议
+
+1. 分布式系统，cacheService 建议使用基于 redis 的集中式缓存策略。
+
+2. configService 如果想更加灵活，可以基于数据库的配置查询
+
+### RateLimitBs 引导类
+
+RateLimitBs 默认配置如下：
+
+```java
+RateLimitBs.newInstance()
+      .timer(Timers.system())
+      .methodService(new RateLimitMethodService())
+      .tokenService(new RateLimitTokenService())
+      .rejectListener(new RateLimitRejectListenerException())
+      .configService(new RateLimitConfigService())
+      .cacheService(new CommonCacheServiceMap())
+      .rateLimit(RateLimits.tokenBucket());
+```
+
+# spring 整合
+
+## maven 引入
+
+```xml
+<dependency>
+    <groupId>com.github.houbb</groupId>
+    <artifactId>rate-limit-spring</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+## 类定义
+
+### 方法
+
+和上面使用类似，直接在方法上声明 `@RateLimit` 注解即可。
+
+```java
+@Service
+public class UserService {
+
+    private static final Log log = LogFactory.getLog(UserService.class);
+
+    @RateLimit(interval = 2, count = 5)
+    public void limitCount() {
+        log.info("{}", Thread.currentThread().getName());
+    }
+
+}
+```
+
+### 配置
+
+通过 `@EnableRateLimit` 声明启用限流。
+
+```java
+@Configuration
+@ComponentScan("com.github.houbb.rate.limit.test.core")
+@EnableRateLimit
+public class SpringConfig {
+
+}
+```
+
+`@EnableRateLimit` 的属性配置和 RateLimitBs 属性是以一一对应的。
+
+| 方法 | 说明 | 默认值 |
+|:---|:---|:---|
+| rateLimit | 限流策略 | 令牌桶算法 |
+| timer | 时间策略 | 系统时间 |
+| cacheService | 缓存策略 | 基于本地 map 的缓存策略 |
+| configService | 限制配置策略 | 默认基于方法上的注解 |
+| tokenService | 身份标识策略 | 默认基于 IP |
+| methodService | 方法标识策略 | 默认基于方法名+参数类型 |
+| rejectListener | 拒绝策略 | 限流时抛出异常 |
+
+这里的属性值，都是对应的 spring bean 名称，支持用户自定义。
+
+# spring-boot 整合
+
+## maven 引入
+
+```xml
+<dependency>
+    <groupId>com.github.houbb</groupId>
+    <artifactId>rate-limit-springboot-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+## 使用
+
+其他和 spring 保持一致。
 
 # 后期 Road-MAP
 
-- [ ] tryAcquire(timeout) 等新方法加入
+- [ ] `@RateLimit` 类级别 public 方法支持
 
-- [ ] 分布式限流，对于数据统计的抽象。可以基于 redis/mysql 等
-
-- [ ] 添加限流策略，忽略、沉睡、降级
-
-- [ ] 更多灵活可配置的统计维度(用户标识等)
-
+- [ ] `@RateLimit` 多注解支持

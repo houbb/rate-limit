@@ -6,6 +6,7 @@
 package com.github.houbb.rate.limit.test.spring;
 
 
+import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
 import com.github.houbb.rate.limit.test.core.config.SpringConfig;
 import com.github.houbb.rate.limit.test.core.service.UserService;
 import org.junit.Test;
@@ -13,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p> </p>
@@ -24,8 +27,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @version 0.0.1
  * @since 0.0.1
  */
-//@SpringJUnitConfig
-//@ContextConfiguration(classes = {SpringConfig.class})
 @ContextConfiguration(classes = SpringConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringConfigTest {
@@ -34,18 +35,18 @@ public class SpringConfigTest {
     private UserService userService;
 
     @Test
-    public void limitCountSlideTest() {
-        for(int i = 0; i < 5; i++) {
-            userService.limitCountSlide();
+    public void limitCountTest() throws InterruptedException {
+        for(int i = 0; i < 4; i++) {
+            TimeUnit.SECONDS.sleep(1);
+            userService.limitCount();
         }
     }
 
-    @Test
-    public void limitFrequencySlideTest() {
-        for(int i = 0; i < 10; i++) {
-            userService.limitFrequencySlide();
+    @Test(expected = RateLimitRuntimeException.class)
+    public void limitCountErrorTest() {
+        for(int i = 0; i < 3; i++) {
+            userService.limitCount();
         }
     }
-
 
 }

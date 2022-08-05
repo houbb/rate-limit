@@ -10,7 +10,7 @@
     <parent>
         <artifactId>rate-limit</artifactId>
         <groupId>com.github.houbb</groupId>
-        <version>0.0.10</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,7 +18,17 @@
     <description>核心代码实现</description>
 
     <dependencies>
+        <!--============================== SELF ==============================-->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>rate-limit-api</artifactId>
+        </dependency>
+
         <!--============================== INTER ==============================-->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>common-cache-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.github.houbb</groupId>
             <artifactId>log-integration</artifactId>
@@ -27,11 +37,23 @@
             <groupId>com.github.houbb</groupId>
             <artifactId>heaven</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>timer-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>web-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>aop-core</artifactId>
+        </dependency>
 
         <!--============================== OTHER ==============================-->
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
 
     </dependencies>

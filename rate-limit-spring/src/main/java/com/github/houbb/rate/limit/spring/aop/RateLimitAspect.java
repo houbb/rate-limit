@@ -5,16 +5,14 @@
 
 package com.github.houbb.rate.limit.spring.aop;
 
-import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
-import com.github.houbb.rate.limit.spring.annotation.RateLimit;
-import com.github.houbb.rate.limit.spring.support.handler.IRateLimitAspectHandler;
+import com.github.houbb.aop.spring.util.SpringAopUtil;
+import com.github.houbb.rate.limit.core.annotation.RateLimit;
+import com.github.houbb.rate.limit.core.bs.RateLimitBs;
 import org.apiguardian.api.API;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,37 +34,22 @@ import java.lang.reflect.Method;
 public class RateLimitAspect {
 
     @Autowired
-    private IRateLimitAspectHandler limitHandler;
+    private RateLimitBs rateLimitBs;
 
-    @Pointcut("@annotation(com.github.houbb.rate.limit.spring.annotation.RateLimit)")
+    @Pointcut("@annotation(com.github.houbb.rate.limit.core.annotation.RateLimit)")
     public void myPointcut() {
     }
 
     @Around("myPointcut() && @annotation(rateLimit)")
     public Object around(ProceedingJoinPoint point, RateLimit rateLimit) throws Throwable {
-        Method method = getCurrentMethod(point);
+        Method method = SpringAopUtil.getCurrentMethod(point);
+        // 执行代理操作
+        Object[] args = point.getArgs();
 
         // 核心处理方法
-        limitHandler.handle(method, rateLimit);
+        rateLimitBs.tryAcquire(method, args);
 
         return point.proceed();
-    }
-
-    /**
-     * 获取当前扥方法
-     * @param point 切面
-     * @return 结果
-     * @since 0.0.1
-     */
-    private Method getCurrentMethod(ProceedingJoinPoint point) {
-        try {
-            Signature sig = point.getSignature();
-            MethodSignature msig = (MethodSignature) sig;
-            Object target = point.getTarget();
-            return target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
-        } catch (NoSuchMethodException e) {
-            throw new RateLimitRuntimeException(e);
-        }
     }
 
 }

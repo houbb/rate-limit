@@ -7,8 +7,8 @@ package com.github.houbb.rate.limit.test.core.service;
 
 import com.github.houbb.log.integration.core.Log;
 import com.github.houbb.log.integration.core.LogFactory;
-import com.github.houbb.rate.limit.core.core.impl.RateLimitSlideWindowQueue;
-import com.github.houbb.rate.limit.spring.annotation.RateLimit;
+import com.github.houbb.rate.limit.core.annotation.RateLimit;
+import com.github.houbb.rate.limit.core.core.RateLimitSlideWindowQueue;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,13 +26,8 @@ public class UserService {
 
     private static final Log log = LogFactory.getLog(UserService.class);
 
-    @RateLimit(interval = 2)
-    public void limitFrequencySlide() {
-        log.info("{}", Thread.currentThread().getName());
-    }
-
-    @RateLimit(interval = 2, count = 5, limitClass = RateLimitSlideWindowQueue.class)
-    public void limitCountSlide() {
+    @RateLimit(interval = 2, count = 5)
+    public void limitCount() {
         log.info("{}", Thread.currentThread().getName());
     }
 

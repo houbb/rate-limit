@@ -1,12 +1,14 @@
 package com.github.houbb.rate.limit.test2;
 
+import com.github.houbb.rate.limit.core.exception.RateLimitRuntimeException;
 import com.github.houbb.rate.limit.test2.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author binbin.hou
@@ -21,9 +23,17 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void limitCountSlideTest() {
-        for(int i = 0; i < 10; i++) {
-            userService.limitFrequencySlide();
+    public void limitCountTest() throws InterruptedException {
+        for(int i = 0; i < 3; i++) {
+            TimeUnit.SECONDS.sleep(1);
+            userService.limitCount();
+        }
+    }
+
+    @Test(expected = RateLimitRuntimeException.class)
+    public void limitCountErrorTest() {
+        for(int i = 0; i < 3; i++) {
+            userService.limitCount();
         }
     }
 

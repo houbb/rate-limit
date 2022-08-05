@@ -5,12 +5,13 @@
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.10</version>
+    <version>1.0.0</version>
     <modules>
+        <module>rate-limit-api</module>
         <module>rate-limit-core</module>
         <module>rate-limit-spring</module>
-        <module>rate-limit-test</module>
         <module>rate-limit-springboot-starter</module>
+        <module>rate-limit-test</module>
         <module>rate-limit-test2</module>
     </modules>
 
@@ -35,9 +36,11 @@
 
         <!--============================== INTER ==============================-->
         <log-integration.version>1.1.8</log-integration.version>
-        <heaven.version>0.1.112</heaven.version>
+        <heaven.version>0.1.163</heaven.version>
         <aop.version>0.0.2</aop.version>
         <test.version>0.0.1</test.version>
+        <timer.version>0.0.5</timer.version>
+        <common-cache.version>0.0.3</common-cache.version>
 
         <!--============================== OTHER ==============================-->
         <guava.version>20.0</guava.version>
@@ -50,8 +53,12 @@
     <dependencyManagement>
 
         <dependencies>
-
             <!--============================== SELF ==============================-->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>rate-limit-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>rate-limit-core</artifactId>
@@ -69,6 +76,26 @@
             </dependency>
 
             <!--============================== INTER ==============================-->
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>common-cache-api</artifactId>
+                <version>${common-cache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>common-cache-core</artifactId>
+                <version>${common-cache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>timer-api</artifactId>
+                <version>${timer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>timer-core</artifactId>
+                <version>${timer.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.houbb</groupId>
                 <artifactId>log-integration</artifactId>
@@ -98,6 +125,12 @@
                 <version>${aop.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>web-core</artifactId>
+                <version>0.0.5</version>
+            </dependency>
+
             <!--============================== OTHER ==============================-->
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -110,7 +143,11 @@
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.70</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
