@@ -33,6 +33,12 @@ public class RateLimitConfigDto implements Serializable {
      */
     private Long count;
 
+    /**
+     * 是否启用
+     * @since 1.1.0
+     */
+    private boolean enable;
+
     public int getPermits() {
         return permits;
     }
@@ -65,6 +71,14 @@ public class RateLimitConfigDto implements Serializable {
         this.count = count;
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     @Override
     public String toString() {
         return "RateLimitConfigDto{" +
@@ -72,6 +86,7 @@ public class RateLimitConfigDto implements Serializable {
                 ", timeUnit=" + timeUnit +
                 ", interval=" + interval +
                 ", count=" + count +
+                ", enable=" + enable +
                 '}';
     }
 

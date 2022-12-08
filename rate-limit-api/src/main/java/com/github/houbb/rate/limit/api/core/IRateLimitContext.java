@@ -71,4 +71,11 @@ public interface IRateLimitContext {
      */
     Object[] args();
 
+    /**
+     * 对应的缓存 key 命名空间
+     * @return 结果
+     * @since 1.1.0
+     */
+    String cacheKeyNamespace();
+
 }

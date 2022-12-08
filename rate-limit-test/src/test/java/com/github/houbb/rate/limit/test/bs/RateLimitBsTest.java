@@ -3,6 +3,7 @@ package com.github.houbb.rate.limit.test.bs;
 import com.github.houbb.common.cache.core.service.CommonCacheServiceMap;
 import com.github.houbb.rate.limit.core.annotation.RateLimit;
 import com.github.houbb.rate.limit.core.bs.RateLimitBs;
+import com.github.houbb.rate.limit.core.constant.RateLimitConst;
 import com.github.houbb.rate.limit.core.core.RateLimits;
 import com.github.houbb.rate.limit.core.support.config.RateLimitConfigService;
 import com.github.houbb.rate.limit.core.support.method.RateLimitMethodService;
@@ -26,6 +27,7 @@ public class RateLimitBsTest {
                 .rejectListener(new RateLimitRejectListenerException())
                 .configService(new RateLimitConfigService())
                 .cacheService(new CommonCacheServiceMap())
-                .rateLimit(RateLimits.tokenBucket());
+                .rateLimit(RateLimits.tokenBucket())
+                .cacheKeyNamespace(RateLimitConst.DEFAULT_CACHE_KEY_NAMESPACE);
     }
 }

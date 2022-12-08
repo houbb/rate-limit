@@ -58,6 +58,7 @@ public class RateLimitConfig implements ImportAware, BeanFactoryPostProcessor {
         IRateLimitTokenService tokenService = beanFactory.getBean(enableAttributes.getString("tokenService"), IRateLimitTokenService.class);
         IRateLimitMethodService methodService = beanFactory.getBean(enableAttributes.getString("methodService"), IRateLimitMethodService.class);
         IRateLimitRejectListener rejectListener = beanFactory.getBean(enableAttributes.getString("rejectListener"), IRateLimitRejectListener.class);
+        String cacheKeyNamespace = enableAttributes.getString("cacheKeyNamespace");
 
         return RateLimitBs.newInstance()
                 .rateLimit(rateLimit)
@@ -67,6 +68,7 @@ public class RateLimitConfig implements ImportAware, BeanFactoryPostProcessor {
                 .tokenService(tokenService)
                 .methodService(methodService)
                 .rejectListener(rejectListener)
+                .cacheKeyNamespace(cacheKeyNamespace)
                 ;
     }
 

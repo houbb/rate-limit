@@ -24,7 +24,8 @@ public interface IRateLimitConfigService {
      * @return 结果
      * @since 1.0.0
      */
-    List<RateLimitConfigDto> queryConfigList(String tokenId, String methodId,
+    List<RateLimitConfigDto> queryConfigList(String tokenId,
+                                             String methodId,
                                              Method method);
 
 }

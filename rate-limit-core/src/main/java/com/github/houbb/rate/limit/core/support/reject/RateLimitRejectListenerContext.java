@@ -71,6 +71,12 @@ public class RateLimitRejectListenerContext implements IRateLimitRejectListenerC
 
     private boolean acquireFlag;
 
+    /**
+     * 缓存命名空间
+     * @since 1.1.0
+     */
+    private String cacheKeyNamespace;
+
     @Override
     public ITimer timer() {
         return timer;
@@ -192,6 +198,16 @@ public class RateLimitRejectListenerContext implements IRateLimitRejectListenerC
     }
 
     @Override
+    public String cacheKeyNamespace() {
+        return cacheKeyNamespace;
+    }
+
+    public RateLimitRejectListenerContext cacheKeyNamespace(String cacheKeyNamespace) {
+        this.cacheKeyNamespace = cacheKeyNamespace;
+        return this;
+    }
+
+    @Override
     public String toString() {
         return "RateLimitRejectListenerContext{" +
                 "timer=" + timer +
@@ -206,6 +222,7 @@ public class RateLimitRejectListenerContext implements IRateLimitRejectListenerC
                 ", methodId='" + methodId + '\'' +
                 ", configList=" + configList +
                 ", acquireFlag=" + acquireFlag +
+                ", cacheKeyNamespace='" + cacheKeyNamespace + '\'' +
                 '}';
     }
 

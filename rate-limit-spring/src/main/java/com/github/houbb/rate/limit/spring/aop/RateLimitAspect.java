@@ -36,12 +36,28 @@ public class RateLimitAspect {
     @Autowired
     private RateLimitBs rateLimitBs;
 
-    @Pointcut("@annotation(com.github.houbb.rate.limit.core.annotation.RateLimit)")
-    public void myPointcut() {
+    /**
+     * 指定注解的方法
+     */
+    @Pointcut("@annotation(com.github.houbb.rate.limit.core.annotation.RateLimit) || @annotation(com.github.houbb.rate.limit.core.annotation.RateLimits)")
+    public void methodMyPointcut() {
     }
 
-    @Around("myPointcut() && @annotation(rateLimit)")
-    public Object around(ProceedingJoinPoint point, RateLimit rateLimit) throws Throwable {
+    /**
+     * 指定注解的类
+     */
+    @Pointcut("@within(com.github.houbb.rate.limit.core.annotation.RateLimit) || @within(com.github.houbb.rate.limit.core.annotation.RateLimits)")
+    public void classMyPointcut() {
+    }
+
+    /**
+     * https://www.cnblogs.com/bjlhx/p/12081300.html 声明方式
+     * @param point 切面
+     * @return 结果
+     * @throws Throwable 异常
+     */
+    @Around("methodMyPointcut() || classMyPointcut()")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
         Method method = SpringAopUtil.getCurrentMethod(point);
         // 执行代理操作
         Object[] args = point.getArgs();

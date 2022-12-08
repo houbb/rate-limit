@@ -9,6 +9,7 @@ import com.github.houbb.rate.limit.api.support.IRateLimitConfigService;
 import com.github.houbb.rate.limit.api.support.IRateLimitMethodService;
 import com.github.houbb.rate.limit.api.support.IRateLimitRejectListener;
 import com.github.houbb.rate.limit.api.support.IRateLimitTokenService;
+import com.github.houbb.rate.limit.core.constant.RateLimitConst;
 import com.github.houbb.rate.limit.core.core.RateLimitContext;
 import com.github.houbb.rate.limit.core.core.RateLimits;
 import com.github.houbb.rate.limit.core.support.config.RateLimitConfigService;
@@ -81,6 +82,12 @@ public final class RateLimitBs {
      */
     private IRateLimitRejectListener rejectListener = new RateLimitRejectListenerException();
 
+    /**
+     * 对应的缓存 key 命名空间
+     * @since 1.1.0
+     */
+    private String cacheKeyNamespace = RateLimitConst.DEFAULT_CACHE_KEY_NAMESPACE;
+
     public RateLimitBs rateLimit(IRateLimit rateLimit) {
         ArgUtil.notNull(rateLimit, "rateLimit");
 
@@ -130,6 +137,13 @@ public final class RateLimitBs {
         return this;
     }
 
+    public RateLimitBs cacheKeyNamespace(String cacheKeyNamespace) {
+        ArgUtil.notEmpty(cacheKeyNamespace, "cacheKeyNamespace");
+
+        this.cacheKeyNamespace = cacheKeyNamespace;
+        return this;
+    }
+
     /**
      * 尝试获取锁
      * @param method 方法
@@ -149,7 +163,8 @@ public final class RateLimitBs {
                 .tokenService(tokenService)
                 .methodService(methodService)
                 .rejectListener(rejectListener)
-                .cacheService(cacheService);
+                .cacheService(cacheService)
+                .cacheKeyNamespace(cacheKeyNamespace);
 
         return rateLimit.tryAcquire(rateLimitContext);
     }

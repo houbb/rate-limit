@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Inherited
 @API(status = API.Status.MAINTAINED)
 public @interface RateLimit {
@@ -54,5 +54,12 @@ public @interface RateLimit {
      * @since 0.0.1
      */
     long count() default 1000;
+
+    /**
+     * 是否启用
+     * @return 结果
+     * @since 1.1.0
+     */
+    boolean enable() default true;
 
 }

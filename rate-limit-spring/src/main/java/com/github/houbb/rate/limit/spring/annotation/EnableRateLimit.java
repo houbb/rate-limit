@@ -1,5 +1,6 @@
 package com.github.houbb.rate.limit.spring.annotation;
 
+import com.github.houbb.rate.limit.core.constant.RateLimitConst;
 import com.github.houbb.rate.limit.spring.config.RateLimitConfig;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
@@ -59,5 +60,12 @@ public @interface EnableRateLimit {
      * @return 策略
      */
     String rejectListener() default "rateLimitRejectListener";
+
+    /**
+     * 缓存的命名空间
+     * @since 1.1.0
+     * @return 结果
+     */
+    String cacheKeyNamespace() default RateLimitConst.DEFAULT_CACHE_KEY_NAMESPACE;
 
 }

@@ -63,6 +63,12 @@ public class RateLimitContext implements IRateLimitContext {
      */
     private Object[] args;
 
+    /**
+     * 命名空间
+     * @since 1.1.0
+     */
+    private String cacheKeyNamespace;
+
     public static RateLimitContext newInstance() {
         return new RateLimitContext();
     }
@@ -147,4 +153,15 @@ public class RateLimitContext implements IRateLimitContext {
         this.cacheService = cacheService;
         return this;
     }
+
+    @Override
+    public String cacheKeyNamespace() {
+        return cacheKeyNamespace;
+    }
+
+    public RateLimitContext cacheKeyNamespace(String cacheKeyNamespace) {
+        this.cacheKeyNamespace = cacheKeyNamespace;
+        return this;
+    }
+
 }

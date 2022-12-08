@@ -39,7 +39,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-core</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -49,12 +49,15 @@
 
 `@RateLimit` 限流注解放在方法上，指定对应的限制频率。
 
-| 属性 | 说明 | 默认值 |
-|:---|:---|:---|
-| value | 方法访问一次消耗的令牌数 | `1` |
-| timeUnit | 时间单位 | `TimeUnit.SECONDS` |
-| interval | 时间间隔 | `60` |
-| count | 可调用次数 | `1000` |
+也可以定义在类上，默认下面的所有方法生效。方法上的优先级高于类。
+
+| 属性       | 说明           | 默认值                |
+|:---------|:-------------|:-------------------|
+| value    | 方法访问一次消耗的令牌数 | `1`                |
+| timeUnit | 时间单位         | `TimeUnit.SECONDS` |
+| interval | 时间间隔         | `60`               |
+| count    | 可调用次数        | `1000`             |
+| enable   | 是否启用         | true               |
 
 默认为 60S 内，可以调用 1000 次。
 
@@ -89,6 +92,26 @@ public void limitCountErrorTest() {
 
 这里默认使用的是令牌桶算法，所以会出现异常。
 
+### 重复注解 @RateLimits
+
+有时候我们希望同时做多个的限制：
+
+（1）一分钟不超过 10 次
+
+（2）一小时不超过 30 次
+
+为了支持多个配置，我们引入了新的注解 `@RateLimits`，可以指定一个 `@RateLimit` 数组。
+
+方法上同时使用 `@RateLimits` + `@RateLimit` 是可以同时生效的，不过为了简单，一般不建议混合使用。
+
+```java
+@RateLimits({@RateLimit(interval = 2, count = 5)})
+public void limitCount() {
+    //...
+}
+```
+
+
 ### 指定引导类
 
 ```java
@@ -107,15 +130,16 @@ RateLimitProxy.getProxy(new UserService(), RateLimitBs.newInstance());
 
 `RateLimitBs` 作为引导类，便于用户自定义配置。
 
-| 方法 | 说明 | 默认值 |
-|:---|:---|:---|
-| rateLimit | 限流策略 | `RateLimits.tokenBucket()` 令牌桶算法 |
-| timer | 时间策略 | `Timers.system()` 系统时间 |
-| cacheService | 缓存策略 | `CommonCacheServiceMap` 基于本地 map 的缓存策略 |
-| configService | 限制配置策略 | `RateLimitConfigService` 默认基于方法上的注解 |
-| tokenService | 身份标识策略 | `RateLimitTokenService` 默认基于 IP |
-| methodService | 方法标识策略 | `RateLimitMethodService` 默认基于方法名+参数类型 |
-| rejectListener | 拒绝策略 | `RateLimitRejectListenerException` 限流时抛出异常 |
+| 方法                | 说明        | 默认值                                        |
+|:------------------|:----------|:-------------------------------------------|
+| rateLimit         | 限流策略      | `RateLimits.tokenBucket()` 令牌桶算法           |
+| timer             | 时间策略      | `Timers.system()` 系统时间                     |
+| cacheService      | 缓存策略      | `CommonCacheServiceMap` 基于本地 map 的缓存策略     |
+| cacheKeyNamespace | 缓存KEY命名空间 | `RATE-LIMIT` 避免不同的应用，命名冲突。                 |
+| configService     | 限制配置策略    | `RateLimitConfigService` 默认基于方法上的注解        |
+| tokenService      | 身份标识策略    | `RateLimitTokenService` 默认基于 IP            |
+| methodService     | 方法标识策略    | `RateLimitMethodService` 默认基于方法名+参数类型      |
+| rejectListener    | 拒绝策略      | `RateLimitRejectListenerException` 限流时抛出异常 |
 
 其中 rateLimit 内置 `RateLimits` 工具中的策略如下：
 
@@ -146,7 +170,8 @@ RateLimitBs.newInstance()
       .rejectListener(new RateLimitRejectListenerException())
       .configService(new RateLimitConfigService())
       .cacheService(new CommonCacheServiceMap())
-      .rateLimit(RateLimits.tokenBucket());
+      .rateLimit(RateLimits.tokenBucket())
+      .cacheKeyNamespace(RateLimitConst.DEFAULT_CACHE_KEY_NAMESPACE);
 ```
 
 # spring 整合
@@ -157,7 +182,7 @@ RateLimitBs.newInstance()
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-spring</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -201,6 +226,7 @@ public class SpringConfig {
 | rateLimit | 限流策略 | 令牌桶算法 |
 | timer | 时间策略 | 系统时间 |
 | cacheService | 缓存策略 | 基于本地 map 的缓存策略 |
+| cacheKeyNamespace | 缓存KEY命名空间 | `RATE-LIMIT` 避免不同的应用，命名冲突。|
 | configService | 限制配置策略 | 默认基于方法上的注解 |
 | tokenService | 身份标识策略 | 默认基于 IP |
 | methodService | 方法标识策略 | 默认基于方法名+参数类型 |
@@ -216,7 +242,7 @@ public class SpringConfig {
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-springboot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -226,9 +252,9 @@ public class SpringConfig {
 
 # 后期 Road-MAP
 
-- [ ] `@RateLimit` 类级别 public 方法支持
+- [x] `@RateLimit` 类级别 public 方法支持
 
-- [ ] `@RateLimit` 多注解支持
+- [x] `@RateLimit` 多注解支持
 
 # 缓存相关工具
 
