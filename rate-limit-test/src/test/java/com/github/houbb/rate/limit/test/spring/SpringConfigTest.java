@@ -12,6 +12,7 @@ import com.github.houbb.rate.limit.test.core.service.ClassUserService;
 import com.github.houbb.rate.limit.test.core.service.RepeatClassUserService;
 import com.github.houbb.rate.limit.test.core.service.RepeatUserService;
 import com.github.houbb.rate.limit.test.core.service.UserService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 @ContextConfiguration(classes = SpringConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
+@Ignore
 public class SpringConfigTest {
 
     @Autowired
