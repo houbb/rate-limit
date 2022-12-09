@@ -5,7 +5,7 @@
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <modules>
         <module>rate-limit-api</module>
         <module>rate-limit-core</module>
@@ -36,7 +36,7 @@
 
         <!--============================== INTER ==============================-->
         <log-integration.version>1.1.8</log-integration.version>
-        <heaven.version>0.1.163</heaven.version>
+        <heaven.version>0.1.168</heaven.version>
         <aop.version>0.0.2</aop.version>
         <test.version>0.0.1</test.version>
         <timer.version>0.0.5</timer.version>
