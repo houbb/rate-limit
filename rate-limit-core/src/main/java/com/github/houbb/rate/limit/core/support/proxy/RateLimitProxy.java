@@ -44,6 +44,7 @@ public final class RateLimitProxy {
      * 获取对象代理
      * @param <T> 泛型
      * @param object 对象代理
+     * @param rateLimitBs 引导类
      * @return 代理信息
      * @since 0.0.1
      */
