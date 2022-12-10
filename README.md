@@ -23,7 +23,7 @@
 
 # 变更日志
 
-> [CHANGELOG](CHANGELOG.md)
+> [CHANGELOG](https://github.com/houbb/rate-limit/blob/master/CHANGELOG.md)
 
 # 快速开始
 
@@ -39,7 +39,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-core</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
@@ -182,7 +182,7 @@ RateLimitBs.newInstance()
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-spring</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
@@ -242,7 +242,7 @@ public class SpringConfig {
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>rate-limit-springboot-starter</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
