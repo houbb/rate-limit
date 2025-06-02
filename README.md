@@ -256,16 +256,19 @@ public class SpringConfig {
 
 - [x] `@RateLimit` 多注解支持
 
-# 缓存相关工具
+## 开源矩阵
 
-[cache: 手写渐进式 redis](https://github.com/houbb/cache)
+下面是一些缓存系列的开源矩阵规划。
 
-[common-cache: 通用缓存标准定义](https://github.com/houbb/common-cache)
-
-[redis-config: 兼容各种常见的 redis 配置模式](https://github.com/houbb/redis-config)
-
-[lock: 开箱即用的分布式锁](https://github.com/houbb/lock)
-
-[resubmit: 防重复提交](https://github.com/houbb/resubmit)
-
-[rate-limit: 限流](https://github.com/houbb/rate-limit/)
+| 名称 | 介绍 | 状态  |
+|:---|:---|:----|
+| [resubmit](https://github.com/houbb/resubmit) | 防止重复提交核心库 | 已开源 |
+| [rate-limit](https://github.com/houbb/rate-limit) | 限流核心库 | 已开源 |
+| [cache](https://github.com/houbb/cache) | 手写渐进式 redis | 已开源 |
+| [lock](https://github.com/houbb/lock) | 开箱即用的分布式锁 | 已开源 |
+| [common-cache](https://github.com/houbb/common-cache) | 通用缓存标准定义 | 已开源 |
+| [redis-config](https://github.com/houbb/redis-config) | 兼容各种常见的 redis 配置模式 | 已开源 |
+| [quota-server](https://github.com/houbb/quota-server) | 限额限次核心服务 | 待开始 |
+| [quota-admin](https://github.com/houbb/quota-admin) | 限额限次控台 | 待开始 |
+| [flow-control-server](https://github.com/houbb/flow-control-server) | 流控核心服务 | 待开始 |
+| [flow-control-admin](https://github.com/houbb/flow-control-admin) | 流控控台 | 待开始 |
